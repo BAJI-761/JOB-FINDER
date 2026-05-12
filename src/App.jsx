@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import SmoothScroll from './components/SmoothScroll';
 import { AppProvider, useApp } from './context/AppContext';
