@@ -1,0 +1,67 @@
+.topBar { display: flex; align-items: center; gap: 10px; padding: 16px var(--page-padding); }
+.searchFlex { flex: 1; }
+.userAvatar { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 14px; flex-shrink: 0; cursor: pointer; }
+.filterRow { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--page-padding); margin-bottom: 12px; }
+.filterBtn { display: flex; align-items: center; gap: 4px; padding: 8px 12px; background: var(--bg-card); border-radius: var(--radius-full); font-size: 12px; color: var(--text-secondary); border: 1px solid var(--border); cursor: pointer; }
+.chipsWrap { padding: 0 var(--page-padding); margin-bottom: 12px; }
+.resultsRow { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--page-padding); margin-bottom: 12px; }
+.resultsCount { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.seeAll { font-size: 12px; font-weight: 600; color: var(--primary); background: none; border: none; cursor: pointer; }
+.jobsList { display: flex; flex-direction: column; gap: 12px; padding: 0 var(--page-padding); padding-bottom: 140px; }
+
+/* Desktop Grid Layout */
+.jobsLayout {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarLeft {
+  display: none;
+}
+
+.mainContent {
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  .jobsLayout {
+    flex-direction: row;
+    gap: 24px;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--page-padding);
+  }
+
+  .topBar {
+    display: none; /* Hide on desktop, use main nav or sidebar filters */
+  }
+
+  .sidebarLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 260px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 96px;
+    height: fit-content;
+  }
+
+  .mobileFilters {
+    display: none;
+  }
+
+  .mainContent {
+    flex: 1;
+  }
+
+  /* Reset padding for desktop since grid handles it */
+  .filterRow, .chipsWrap, .resultsRow, .jobsList {
+    padding: 0;
+  }
+  
+  .jobsList {
+    padding-bottom: 40px;
+  }
+}
+

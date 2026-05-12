@@ -1,0 +1,38 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: var(--z-modal-backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: backdropFadeIn 150ms ease-out;
+}
+.modal {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 32px 24px;
+  max-width: 380px;
+  width: 100%;
+  animation: modalSlideUp 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+.icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.icon.success { background: var(--trusted-green-light); color: var(--trusted-green); }
+.icon.error { background: var(--accent-light); color: var(--accent); }
+.icon.warning { background: var(--status-pending-bg); color: var(--status-pending); }
+.title { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+.message { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
+.actions { display: flex; gap: 12px; }
+.actions button { flex: 1; }

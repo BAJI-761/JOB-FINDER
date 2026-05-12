@@ -1,0 +1,48 @@
+.card {
+  min-width: 240px;
+  max-width: 260px;
+  height: 180px;
+  background: linear-gradient(135deg, #3B9EE8 0%, #2A7DC9 50%, #1D6AAF 100%);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-featured);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(59, 158, 232, 0.4); }
+.topRow { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+.companyInfo { display: flex; align-items: center; gap: 8px; }
+.companyName { font-size: 12px; opacity: 0.9; }
+.jobTitle { font-size: 15px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.salary { font-size: 12px; opacity: 0.85; margin-bottom: auto; }
+.bottomRow { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.applyBtn {
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.applyBtn:hover { background: rgba(255,255,255,0.35); }

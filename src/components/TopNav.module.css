@@ -1,0 +1,183 @@
+.topNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--nav-bg);
+  box-shadow: var(--shadow-sm);
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--page-padding);
+}
+
+.logoArea {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.logoIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.logoText {
+  font-size: 18px;
+  font-weight: 700;
+  display: none;
+}
+
+.desktopNav {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 72px;
+  height: 100%;
+  color: var(--text-secondary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: color var(--transition-fast);
+}
+
+.navItem:hover {
+  color: var(--text-primary);
+}
+
+.navItem.active {
+  color: var(--text-primary);
+}
+
+.navItem.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px; /* Depending on nav height, adjust */
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px 2px 0 0;
+}
+
+.navLabel {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.badge {
+  position: absolute;
+  top: -2px;
+  right: 18px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  height: 16px;
+  min-width: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid var(--nav-bg);
+}
+
+.userActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.searchBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--border-light);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.searchBtn:hover {
+  background: var(--border);
+  color: var(--text-primary);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Mobile Nav (Bottom fallback if needed, but let's just make TopNav handle everything) */
+.mobileMenuBtn {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* Desktop Styles */
+@media (min-width: 768px) {
+  .topNav {
+    height: 72px;
+  }
+  
+  .logoText {
+    display: block;
+  }
+
+  .desktopNav {
+    display: flex;
+    height: 100%;
+  }
+
+  .mobileMenuBtn {
+    display: none;
+  }
+}

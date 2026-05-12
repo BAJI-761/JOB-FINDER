@@ -1,0 +1,300 @@
+/* JobFinder — All Animations & Motion Effects */
+
+/* ── Page Enter ── */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: pageEnter 300ms ease-out forwards;
+}
+
+/* ── Slide Up (Job Detail) ── */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 350ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ── Fade In ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 300ms ease-out forwards;
+}
+
+/* ── Fade Out ── */
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* ── Scale In ── */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.scale-in {
+  animation: scaleIn 250ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ── Staggered Card Entry ── */
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-enter {
+  opacity: 0;
+  animation: cardEnter 400ms ease-out forwards;
+}
+
+.stagger-enter:nth-child(1) { animation-delay: 0ms; }
+.stagger-enter:nth-child(2) { animation-delay: 60ms; }
+.stagger-enter:nth-child(3) { animation-delay: 120ms; }
+.stagger-enter:nth-child(4) { animation-delay: 180ms; }
+.stagger-enter:nth-child(5) { animation-delay: 240ms; }
+.stagger-enter:nth-child(6) { animation-delay: 300ms; }
+.stagger-enter:nth-child(7) { animation-delay: 360ms; }
+.stagger-enter:nth-child(8) { animation-delay: 420ms; }
+
+/* ── Bookmark Bounce ── */
+@keyframes bookmarkBounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(0.8); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.bookmark-bounce {
+  animation: bookmarkBounce 300ms ease-out;
+}
+
+/* ── Chip Click Pulse ── */
+@keyframes chipPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+.chip-pulse {
+  animation: chipPulse 150ms ease;
+}
+
+/* ── Apply Button Chevrons ── */
+@keyframes slideArrows {
+  0% {
+    opacity: 0.2;
+    transform: translateX(-4px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateX(4px);
+  }
+}
+
+.chevron-animate:nth-child(1) { animation: slideArrows 1.5s infinite 0s; }
+.chevron-animate:nth-child(2) { animation: slideArrows 1.5s infinite 0.15s; }
+.chevron-animate:nth-child(3) { animation: slideArrows 1.5s infinite 0.3s; }
+.chevron-animate:nth-child(4) { animation: slideArrows 1.5s infinite 0.45s; }
+.chevron-animate:nth-child(5) { animation: slideArrows 1.5s infinite 0.6s; }
+
+/* ── Countdown Flip ── */
+@keyframes digitFlip {
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+
+.digit-flip {
+  animation: digitFlip 100ms ease-out;
+}
+
+/* ── Shimmer / Loading Skeleton ── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Toast Slide In ── */
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+}
+
+/* ── Modal Backdrop ── */
+@keyframes backdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Typing Dots (Chat) ── */
+@keyframes typingDots {
+  0%, 20% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-4px); }
+  80%, 100% { opacity: 0.3; transform: translateY(0); }
+}
+
+.typing-dot:nth-child(1) { animation: typingDots 1.2s infinite 0s; }
+.typing-dot:nth-child(2) { animation: typingDots 1.2s infinite 0.2s; }
+.typing-dot:nth-child(3) { animation: typingDots 1.2s infinite 0.4s; }
+
+/* ── Splash Pulse ── */
+@keyframes splashPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.9; }
+}
+
+/* ── Slide In From Right ── */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Button Ripple ── */
+@keyframes ripple {
+  from {
+    transform: scale(0);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ── Spin ── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ── Success Checkmark ── */
+@keyframes checkmarkDraw {
+  0% { stroke-dashoffset: 50; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes successCircle {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── Message Bubble Entry ── */
+@keyframes messageBubbleIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Notification Badge Pulse ── */
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* ── Progress Bar Fill ── */
+@keyframes progressFill {
+  from { width: 0; }
+}
+
+/* ── Float animation ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}

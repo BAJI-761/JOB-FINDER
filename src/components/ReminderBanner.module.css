@@ -1,0 +1,50 @@
+.banner {
+  background: linear-gradient(135deg, #3B9EE8 0%, #2A7DC9 50%, #1D6AAF 100%);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #FFFFFF;
+  box-shadow: var(--shadow-featured);
+  position: relative;
+  overflow: hidden;
+}
+.banner::after {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 100px;
+  height: 100px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+.iconCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  backdrop-filter: blur(4px);
+}
+.textBlock { flex: 1; }
+.title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.subtitle { font-size: 11px; opacity: 0.85; }
+.countdown { display: flex; gap: 4px; align-items: center; }
+.digitBox {
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  border-radius: 6px;
+  padding: 4px 6px;
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 28px;
+  text-align: center;
+  transition: transform 100ms ease-out;
+}
+.digitBox.flipping { animation: digitFlip 100ms ease-out; }
+.colon { font-size: 14px; font-weight: 700; opacity: 0.7; }

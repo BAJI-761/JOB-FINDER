@@ -1,0 +1,73 @@
+.header { display: flex; align-items: center; justify-content: space-between; padding: 16px var(--page-padding); }
+.avatarCircle { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 14px; }
+.locationBtn { display: flex; align-items: center; gap: 4px; font-size: 13px; color: var(--text-secondary); background: none; border: none; cursor: pointer; }
+.notifBtn { position: relative; width: 36px; height: 36px; border-radius: 50%; background: var(--bg-card); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); color: var(--text-secondary); cursor: pointer; border: none; }
+.notifBadge { position: absolute; top: 0; right: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 2px solid #fff; }
+.section { padding: 0 var(--page-padding); margin-bottom: 20px; }
+.sectionHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.sectionTitle { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+.seeAll { font-size: 12px; font-weight: 600; color: var(--primary); cursor: pointer; background: none; border: none; }
+.horizontalScroll { display: flex; gap: 12px; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; padding: 4px 0; scroll-snap-type: x mandatory; }
+.horizontalScroll::-webkit-scrollbar { display: none; }
+.jobsList { display: flex; flex-direction: column; gap: 12px; }
+.searchWrap { padding: 0 var(--page-padding); margin-bottom: 16px; }
+.chipsWrap { padding: 0 var(--page-padding); margin-bottom: 16px; }
+.bannerWrap { padding: 0 var(--page-padding); margin-bottom: 16px; }
+
+/* Desktop Grid Layout */
+.homeLayout {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarLeft, .sidebarRight {
+  display: none;
+}
+
+.mainFeed {
+  flex: 1;
+}
+
+@media (min-width: 1024px) {
+  .homeLayout {
+    flex-direction: row;
+    gap: 24px;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--page-padding);
+  }
+
+  .header {
+    display: none;
+  }
+
+  .sidebarLeft {
+    display: block;
+    width: 260px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 96px; /* TopNav height + spacing */
+  }
+
+  .sidebarRight {
+    display: block;
+    width: 320px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 96px;
+  }
+
+  .mainFeed {
+    max-width: 600px;
+  }
+
+  .mobileRecommended {
+    display: none;
+  }
+
+  /* Reset padding for desktop since the grid gap handles it */
+  .section, .searchWrap, .chipsWrap, .bannerWrap {
+    padding: 0;
+  }
+}
+

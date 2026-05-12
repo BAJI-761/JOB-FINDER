@@ -1,0 +1,32 @@
+.toggle {
+  position: fixed;
+  bottom: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--nav-dark);
+  border-radius: var(--radius-full);
+  padding: 4px;
+  display: flex;
+  gap: 0;
+  z-index: var(--z-sticky);
+  box-shadow: var(--shadow-float);
+}
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  color: rgba(255,255,255,0.5);
+  background: transparent;
+}
+.btn.active {
+  background: #FFFFFF;
+  color: var(--nav-dark);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
