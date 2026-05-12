@@ -27,7 +27,7 @@ export default function LoginPage() {
   return (
     <PageTransition>
       <div className={styles.page}>
-        <div className={styles.logo}>JF</div>
+        <div className={styles.logo} style={{ fontFamily: 'var(--font-display-family)' }}>LU</div>
         <h1 className={styles.title}>Welcome back!</h1>
         <p className={styles.subtitle}>Sign in to your account</p>
         <div className={styles.card}>

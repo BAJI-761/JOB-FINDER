@@ -36,8 +36,8 @@ export default function TopNav() {
       <div className={styles.container}>
         {/* Logo */}
         <div className={styles.logoArea} onClick={() => navigate('/home')} style={{ cursor: 'pointer' }}>
-          <div className={styles.logoIcon}>JF</div>
-          <span className={styles.logoText}>JobFinder</span>
+          <div className={styles.logoIcon} style={{ fontFamily: 'var(--font-display-family)' }}>LU</div>
+          <span className={styles.logoText} style={{ fontFamily: 'var(--font-display-family)' }}>LinkUp</span>
         </div>
 
         {/* Desktop Navigation */}

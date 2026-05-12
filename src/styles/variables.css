@@ -1,5 +1,39 @@
-/* JobFinder Design System — CSS Custom Properties */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+/* LinkUp Design System — CSS Custom Properties */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/montserrat/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/montserrat/Montserrat-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/montserrat/Montserrat-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/montserrat/Montserrat-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Assasin Aerox';
+  src: url('../assets/fonts/assasin-aerox/AssasinAerox.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 :root {
   /* ── Colors ── */
@@ -39,9 +73,11 @@
   --status-rejected-bg: rgba(239, 68, 68, 0.1);
 
   /* ── Typography ── */
-  --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-display-size: 22px;
-  --font-display-weight: 700;
+  --font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display-family: 'Assasin Aerox', sans-serif;
+  --font-display-size: 24px;
+  --font-display-weight: 400;
+
   --font-heading-size: 18px;
   --font-heading-weight: 700;
   --font-subheading-size: 16px;

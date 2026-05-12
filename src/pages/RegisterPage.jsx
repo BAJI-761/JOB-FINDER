@@ -29,7 +29,7 @@ export default function RegisterPage() {
   return (
     <PageTransition>
       <div className={styles.page}>
-        <div className={styles.logo}>JF</div>
+        <div className={styles.logo} style={{ fontFamily: 'var(--font-display-family)' }}>LU</div>
         <h1 className={styles.title}>Create Account</h1>
         <p className={styles.subtitle}>Join thousands of job seekers & employers</p>
         <div className={styles.card}>

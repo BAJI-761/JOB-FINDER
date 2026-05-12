@@ -1,4 +1,4 @@
-# 🚀 JobFinder — The Future of Career Growth
+# 🚀 LinkUp — The Future of Career Growth
 
 [![React](https://img.shields.io/badge/React-19.0-61DAFB?logo=react&logoColor=white)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -6,13 +6,13 @@
 [![GSAP](https://img.shields.io/badge/GSAP-3.15-88CE02?logo=greensock&logoColor=white)](https://greensock.com/gsap/)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.0-0055FF?logo=framer&logoColor=white)](https://www.framer.com/motion/)
 
-![JobFinder Banner](./public/readme-assets/banner.png)
+![LinkUp Banner](./public/readme-assets/banner.png)
 
 ## 🌟 Overview
 
-**JobFinder** is a next-generation job portal designed with a focus on immersive user experience and high-performance interactivity. Built using **React 19** and powered by **Three.js** and **Spline**, it transforms the mundane task of job searching into an engaging journey.
+**LinkUp** is a next-generation job portal designed with a focus on immersive user experience and high-performance interactivity. Built using **React 19** and powered by **Three.js** and **Spline**, it transforms the mundane task of job searching into an engaging journey.
 
-With butter-smooth animations by **GSAP** and **Lenis**, and a robust backend-ready architecture, JobFinder is more than just a job board—it's a career catalyst.
+With butter-smooth animations by **GSAP** and **Lenis**, and a robust backend-ready architecture, LinkUp is more than just a job board—it's a career catalyst.
 
 ---
 

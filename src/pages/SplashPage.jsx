@@ -64,10 +64,10 @@ export default function SplashPage() {
       
       <div ref={textRef} style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div className="anime-el" style={{ width: 80, height: 80, borderRadius: 20, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24, backdropFilter: 'blur(10px)' }}>
-          <span style={{ fontSize: 36, fontWeight: 800 }}>JF</span>
+          <span style={{ fontSize: 36, fontWeight: 800, fontFamily: 'var(--font-display-family)' }}>LU</span>
         </div>
-        <h1 className="anime-el" style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }}>JobFinder</h1>
-        <p className="anime-el" style={{ fontSize: 14, opacity: 0.8 }}>Your Career Starts Here</p>
+        <h1 className="anime-el" style={{ fontSize: 28, fontWeight: 800, marginBottom: 8, fontFamily: 'var(--font-display-family)' }}>LinkUp</h1>
+        <p className="anime-el" style={{ fontSize: 14, opacity: 0.8 }}>Your Network Starts Here</p>
       </div>
     </div>
   );

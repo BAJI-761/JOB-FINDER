@@ -8,14 +8,14 @@ import { defaultCompanies } from '../data/companies';
 const AppContext = createContext(null);
 
 const STORAGE_KEYS = {
-  AUTH: 'jobfinder_auth',
-  USERS: 'jobfinder_users',
-  JOBS: 'jobfinder_jobs',
-  APPLICATIONS: 'jobfinder_applications',
-  SAVED: 'jobfinder_saved',
-  CHATS: 'jobfinder_chats',
-  NOTIFICATIONS: 'jobfinder_notifications',
-  COMPANIES: 'jobfinder_companies'
+  AUTH: 'linkup_auth',
+  USERS: 'linkup_users',
+  JOBS: 'linkup_jobs',
+  APPLICATIONS: 'linkup_applications',
+  SAVED: 'linkup_saved',
+  CHATS: 'linkup_chats',
+  NOTIFICATIONS: 'linkup_notifications',
+  COMPANIES: 'linkup_companies'
 };
 
 function loadFromStorage(key, fallback) {
