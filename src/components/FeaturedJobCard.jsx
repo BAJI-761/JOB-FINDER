@@ -86,7 +86,7 @@ export default function FeaturedJobCard({ job }) {
           {formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency, job.salaryPeriod)}
         </div>
         <div className={styles.bookmark} onClick={(e) => e.stopPropagation()}>
-          <BookmarkButton jobId={job.id} />
+          <BookmarkButton jobId={job.id} light={state.theme === 'light'} />
         </div>
       </div>
       
