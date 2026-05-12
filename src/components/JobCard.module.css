@@ -3,24 +3,46 @@
   border: 1px solid var(--border);
   padding: 24px;
   cursor: pointer;
-  transition: all 200ms ease;
+  transition: background 200ms ease, border-color 200ms ease;
   display: flex;
   flex-direction: column;
   gap: 16px;
   position: relative;
   overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.editorialCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, var(--primary-light), transparent);
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
 }
 
 .editorialCard:hover {
   background: var(--bg-card-hover);
-  box-shadow: 4px 4px 0px 0px var(--border);
-  transform: translate(-2px, -2px);
+  border-color: var(--primary);
+  /* Layered Shadow for depth */
+  box-shadow: 
+    0px 2px 4px rgba(0,0,0,0.05),
+    0px 12px 32px rgba(0,0,0,0.05),
+    4px 4px 0px 0px var(--border);
+  transform: translateZ(20px);
+}
+
+.editorialCard:hover::before {
+  opacity: 0.1;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .meta {
@@ -48,6 +70,8 @@
 
 .body {
   flex: 1;
+  position: relative;
+  z-index: 2;
 }
 
 .title {
@@ -57,6 +81,11 @@
   line-height: 1.2;
   margin-bottom: 8px;
   color: var(--text-primary);
+  transition: transform 300ms ease;
+}
+
+.editorialCard:hover .title {
+  transform: translateZ(10px);
 }
 
 .company {
@@ -79,6 +108,8 @@
   align-items: flex-end;
   padding-top: 16px;
   border-top: 1px solid var(--border-light);
+  position: relative;
+  z-index: 2;
 }
 
 .details {
@@ -104,7 +135,10 @@
 .action {
   color: var(--text-primary);
   opacity: 0.4;
-  transition: opacity 200ms ease;
+  transition: opacity 200ms ease, transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .editorialCard:hover .action {

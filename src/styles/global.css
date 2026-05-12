@@ -440,3 +440,39 @@ a:focus:not(:focus-visible) {
   flex-direction: column;
   gap: var(--spacing-xl);
 }
+
+/* ── Elite Depth Utilities ── */
+:root {
+  --shadow-layered: 
+    0px 2px 4px rgba(0,0,0,0.05),
+    0px 12px 32px rgba(0,0,0,0.05),
+    0px 32px 64px rgba(0,0,0,0.05);
+}
+
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--bg-card-hover) 0%, transparent 60%),
+    var(--bg-page);
+  opacity: 0.5;
+  pointer-events: none;
+  transition: background 0.3s ease-out;
+}
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Kinetic Utilities ── */
+.magnetic {
+  display: inline-block;
+  cursor: pointer;
+}
+

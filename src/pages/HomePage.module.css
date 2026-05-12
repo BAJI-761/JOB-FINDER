@@ -1,5 +1,47 @@
 .homeContainer {
-  padding-top: 20px;
+  padding-top: 0;
+}
+
+/* ── Ticker ── */
+.tickerContainer {
+  background: var(--primary);
+  color: var(--bg-page);
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+.tickerContent {
+  display: inline-flex;
+  animation: scrollTicker 30s linear infinite;
+}
+
+.tickerGroup {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding-right: 30px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.tickerGroup span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.separator {
+  opacity: 0.3;
+}
+
+@keyframes scrollTicker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* ── Masthead ── */
@@ -41,33 +83,9 @@
   line-height: 0.9;
   margin: 0;
   color: var(--text-primary);
-}
-
-/* ── Sections ── */
-.sectionHeader {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-.sectionTitle {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--font-serif);
-  font-size: 20px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-}
-
-.line {
-  flex: 1;
-  height: 1px;
-  background: var(--border);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* ── Spotlight ── */
@@ -106,12 +124,6 @@
   margin-bottom: 60px;
 }
 
-@media (max-width: 768px) {
-  .newsList {
-    grid-template-columns: 1fr;
-  }
-}
-
 .loadMore {
   width: 100%;
   padding: 30px;
@@ -131,26 +143,6 @@
 .loadMore:hover {
   background: var(--bg-card-hover);
   border-style: solid;
-}
-
-/* ── Filtering ── */
-.filterWrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--bg-card);
-  padding: 6px 12px;
-  border: 1px solid var(--border);
-}
-
-.filterSelect {
-  background: transparent;
-  border: none;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
 }
 
 /* ── Side Column ── */
@@ -196,63 +188,103 @@
 
 .trendValue {
   font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
 }
 
 .actionGrid {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .actionBtn {
   width: 100%;
-  padding: 14px;
+  padding: 16px;
   border: 1px solid var(--border);
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  transition: all 150ms ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--bg-card);
 }
 
 .actionBtn:hover {
   background: var(--primary);
   color: var(--bg-page);
+  transform: translateX(8px);
 }
 
-/* ── Ad Block ── */
-.adBlock {
-  background: var(--accent-light);
-  padding: 24px;
-  border: 1px solid var(--accent);
+/* ── Premium Card ── */
+.premiumCard {
+  background: var(--bg-card);
+  padding: 30px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: all 400ms ease;
+}
+
+.cardGlow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+  opacity: 0.5;
+  animation: rotateGlow 10s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotateGlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .adLabel {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 800;
   color: var(--accent);
-  margin-bottom: 12px;
-  letter-spacing: 0.2em;
+  margin-bottom: 16px;
+}
+
+.premiumTitle {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 16px;
 }
 
 .adText {
-  font-family: var(--font-serif);
-  font-size: 16px;
-  line-height: 1.4;
-  margin-bottom: 20px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
 }
 
 .adBtn {
   width: 100%;
-  padding: 12px;
-  background: var(--accent);
-  color: white;
+  padding: 14px;
+  background: var(--primary);
+  color: var(--bg-page);
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
+  transition: all 200ms ease;
+}
+
+.adBtn:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -10px var(--accent);
 }
