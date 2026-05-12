@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Search, Filter, Archive, Bookmark, CheckCircle, SlidersHorizontal } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -38,21 +39,42 @@ export default function JobsPage() {
                 className={`${styles.sideNavBtn} ${toggleView === null ? styles.active : ''}`}
                 onClick={() => setToggleView(null)}
               >
-                <Archive size={16} />
+                {toggleView === null && (
+                  <motion.div 
+                    layoutId="archiveTab"
+                    className={styles.activeIndicator}
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <Archive size={18} strokeWidth={toggleView === null ? 2 : 1.5} />
                 <span>All Editions</span>
               </button>
               <button 
                 className={`${styles.sideNavBtn} ${toggleView === 'saved' ? styles.active : ''}`}
                 onClick={() => setToggleView('saved')}
               >
-                <Bookmark size={16} />
+                {toggleView === 'saved' && (
+                  <motion.div 
+                    layoutId="archiveTab"
+                    className={styles.activeIndicator}
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <Bookmark size={18} strokeWidth={toggleView === 'saved' ? 2 : 1.5} />
                 <span>Saved Items</span>
               </button>
               <button 
                 className={`${styles.sideNavBtn} ${toggleView === 'applied' ? styles.active : ''}`}
                 onClick={() => setToggleView('applied')}
               >
-                <CheckCircle size={16} />
+                {toggleView === 'applied' && (
+                  <motion.div 
+                    layoutId="archiveTab"
+                    className={styles.activeIndicator}
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <CheckCircle size={18} strokeWidth={toggleView === 'applied' ? 2 : 1.5} />
                 <span>My Briefcase</span>
               </button>
             </div>
