@@ -16,17 +16,17 @@ export default function ForgotPasswordPage() {
       <div className={styles.page}>
         {sent ? (
           <div style={{ textAlign: 'center' }}>
-            <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--trusted-green-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-              <CheckCircle size={32} color="var(--trusted-green)" />
+            <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--bg-card-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', border: '1px solid var(--border)' }}>
+              <CheckCircle size={32} color="var(--primary)" />
             </div>
-            <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Email Sent!</h2>
+            <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, color: 'var(--text-primary)' }}>Email Sent!</h2>
             <p style={{ fontSize: 14, color: 'var(--text-secondary)', marginBottom: 24 }}>Check your inbox for password reset instructions.</p>
             <button className="btn-primary" onClick={() => navigate('/login')} style={{ maxWidth: 300 }}>Back to Login</button>
           </div>
         ) : (
           <>
             <button onClick={() => navigate(-1)} style={{ position: 'absolute', top: 20, left: 20, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}><ArrowLeft size={22} /></button>
-            <div className={styles.logo}>JF</div>
+            <div className={styles.logo} style={{ fontFamily: 'var(--font-display-family)' }}>LU</div>
             <h1 className={styles.title}>Forgot Password?</h1>
             <p className={styles.subtitle}>Enter your email to receive reset instructions</p>
             <div className={styles.card}>

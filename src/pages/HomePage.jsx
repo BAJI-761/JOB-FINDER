@@ -1,11 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, MapPin, ChevronDown } from 'lucide-react';
+import { ArrowRight, TrendingUp, Clock, Filter } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import PageTransition from '../components/PageTransition';
-import ReminderBanner from '../components/ReminderBanner';
-import SearchBar from '../components/SearchBar';
-import FilterChips from '../components/FilterChips';
 import FeaturedJobCard from '../components/FeaturedJobCard';
 import JobCard from '../components/JobCard';
 import styles from './HomePage.module.css';
@@ -14,166 +11,143 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const filterChips = ['See All', 'Full Time', 'Part Time', 'Freelance', 'Remote'];
+const filterChips = ['All Editions', 'Full Time', 'Part Time', 'Freelance', 'Remote'];
 
 export default function HomePage() {
-  const { state, dispatch, getFilteredJobs, getUnreadNotificationCount } = useApp();
+  const { state, dispatch, getFilteredJobs } = useApp();
   const navigate = useNavigate();
   const jobs = getFilteredJobs();
-  const featured = jobs.filter(j => j.featured).slice(0, 5);
-  const latest = jobs.slice(0, 6);
-  const unreadNotifs = getUnreadNotificationCount();
-  const user = state.currentUser;
+  const featured = jobs.filter(j => j.featured).slice(0, 3);
+  const latest = jobs.slice(0, 10);
   
   const pageRef = useRef();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.utils.toArray('.gsap-reveal').forEach((el) => {
-        gsap.fromTo(el, 
-          { y: 50, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none reverse"
-            },
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            ease: "power3.out"
+      gsap.fromTo('.gsap-news-item', 
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: '.gsap-news-container',
+            start: "top 80%"
           }
-        );
-      });
+        }
+      );
     }, pageRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <PageTransition>
-      <div ref={pageRef} className={`page-content ${styles.homeLayout}`}>
-        {/* Left Sidebar (Desktop only) */}
-        <div className={`gsap-reveal ${styles.sidebarLeft}`}>
-          <div className="card" style={{ textAlign: 'center', marginBottom: 24 }}>
-            <div className={styles.avatarCircle} style={{ width: 64, height: 64, margin: '0 auto 16px', fontSize: 24 }}>
-              {user?.name?.[0]?.toUpperCase() || 'U'}
-            </div>
-            <h3 style={{ fontSize: 18, marginBottom: 4 }}>{user?.name || 'Candidate'}</h3>
-            <p className="text-secondary" style={{ fontSize: 13, marginBottom: 16 }}>
-              {user?.role === 'employer' ? 'Hiring Manager' : 'Software Professional'}
-            </p>
-            <div style={{ borderTop: '1px solid var(--border)', paddingTop: 16, textAlign: 'left' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                <span className="text-secondary" style={{ fontSize: 12 }}>Profile Views</span>
-                <span className="text-primary" style={{ fontSize: 12, fontWeight: 600 }}>42</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span className="text-secondary" style={{ fontSize: 12 }}>Search Appearances</span>
-                <span className="text-primary" style={{ fontSize: 12, fontWeight: 600 }}>18</span>
-              </div>
+    <PageTransition variant="newsprint">
+      <div ref={pageRef} className={styles.homeContainer}>
+        {/* Editorial Masthead */}
+        <header className={styles.masthead}>
+          <div className={styles.mastheadTop}>
+            <div className={styles.dateLine}>
+              <span>EST. 2024</span>
+              <span className={styles.dot}>•</span>
+              <span>GLOBAL PROFESSIONAL NETWORK</span>
+              <span className={styles.dot}>•</span>
+              <span>{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase()}</span>
             </div>
           </div>
-        </div>
+          <h1 className={styles.mainTitle}>The Front Page</h1>
+        </header>
 
-        {/* Main Feed Column */}
-        <div className={styles.mainFeed}>
-          {/* Header (Mobile Only) */}
-        <div className={styles.header}>
-          <div className={styles.avatarCircle} onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
-            {user?.name?.[0]?.toUpperCase() || 'U'}
-          </div>
-          <button className={styles.locationBtn}>
-            <MapPin size={14} />
-            <span>{user?.location?.label || 'My Location'}</span>
-            <ChevronDown size={14} />
-          </button>
-          <button className={styles.notifBtn} onClick={() => navigate('/notifications')} aria-label="Notifications">
-            <Bell size={18} />
-            {unreadNotifs > 0 && <span className={styles.notifBadge} />}
-          </button>
-        </div>
-
-        {/* Reminder Banner */}
-        <div className={styles.bannerWrap}>
-          <ReminderBanner />
-        </div>
-
-        {/* Search */}
-        <div className={styles.searchWrap}>
-          <SearchBar
-            value={state.searchQuery}
-            onChange={(v) => dispatch({ type: 'SET_SEARCH', payload: v })}
-            onSubmit={() => navigate('/search')}
-          />
-        </div>
-
-        {/* Filter Chips */}
-        <div className={styles.chipsWrap}>
-          <FilterChips
-            chips={filterChips}
-            activeChip={state.activeJobFilter}
-            onChipClick={(chip) => dispatch({ type: 'SET_JOB_FILTER', payload: chip })}
-          />
-        </div>
-
-        {/* Recommended Section (Mobile Only - moved to right sidebar on desktop) */}
-        <div className={`gsap-reveal ${styles.mobileRecommended}`}>
-        {featured.length > 0 && (
-          <div className={styles.section}>
-            <div className={styles.sectionHeader}>
-              <span className={styles.sectionTitle}>Recommended 🚀</span>
-              <button className={styles.seeAll} onClick={() => navigate('/jobs')}>See all</button>
-            </div>
-            <div className={`${styles.horizontalScroll} hide-scrollbar`}>
-              {featured.map(job => (
-                <FeaturedJobCard key={job.id} job={job} />
-              ))}
-              {/* If no featured, show first 3 as featured */}
-              {featured.length === 0 && jobs.slice(0, 3).map(job => (
-                <FeaturedJobCard key={job.id} job={job} />
-              ))}
-            </div>
-          </div>
-        )}
-        {featured.length === 0 && jobs.length > 0 && (
-          <div className={styles.section}>
-            <div className={styles.sectionHeader}>
-              <span className={styles.sectionTitle}>Recommended 🚀</span>
-              <button className={styles.seeAll} onClick={() => navigate('/jobs')}>See all</button>
-            </div>
-            <div className={`${styles.horizontalScroll} hide-scrollbar`}>
-              {jobs.slice(0, 4).map(job => (
-                <FeaturedJobCard key={job.id} job={job} />
-              ))}
-            </div>
-          </div>
-        )}
-        </div>
-
-        {/* Latest Posts */}
-        <div className={`gsap-reveal ${styles.section}`}>
+        {/* Featured Spotlight Grid */}
+        <section className={styles.spotlightSection}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionTitle}>Latest Post 📌</span>
-            <button className={styles.seeAll} onClick={() => navigate('/jobs')}>See all</button>
+            <h2 className={styles.sectionTitle}>
+              <TrendingUp size={20} />
+              <span>Editorial Spotlight</span>
+            </h2>
+            <div className={styles.line} />
           </div>
-          <div className={styles.jobsList}>
-            {latest.map((job, i) => (
-              <JobCard key={job.id} job={job} index={i} />
-            ))}
+          
+          <div className={`${styles.spotlightGrid} hide-scrollbar`}>
+            {featured.length > 0 ? (
+              featured.map(job => <FeaturedJobCard key={job.id} job={job} />)
+            ) : (
+              jobs.slice(0, 3).map(job => <FeaturedJobCard key={job.id} job={job} />)
+            )}
           </div>
-        </div>
-        </div> {/* End Main Feed */}
+        </section>
 
-        {/* Right Sidebar (Desktop only) */}
-        <div className={`gsap-reveal ${styles.sidebarRight}`}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionTitle}>Recommended 🚀</span>
+        {/* Main Feed Grid */}
+        <div className={styles.mainGrid}>
+          {/* Latest Dispatches */}
+          <div className={styles.feedColumn}>
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>
+                <Clock size={20} />
+                <span>Latest Dispatches</span>
+              </h2>
+              <div className={styles.filterWrap}>
+                <Filter size={14} />
+                <select 
+                  value={state.activeJobFilter} 
+                  onChange={(e) => dispatch({ type: 'SET_JOB_FILTER', payload: e.target.value })}
+                  className={styles.filterSelect}
+                >
+                  {filterChips.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div className={`${styles.newsList} gsap-news-container`}>
+              {latest.map((job, i) => (
+                <div key={job.id} className="gsap-news-item">
+                  <JobCard job={job} index={i} />
+                </div>
+              ))}
+            </div>
+
+            <button className={styles.loadMore} onClick={() => navigate('/jobs')}>
+              <span>View Archives</span>
+              <ArrowRight size={16} />
+            </button>
           </div>
-          <div className={styles.jobsList}>
-            {(featured.length > 0 ? featured : jobs.slice(0, 3)).map(job => (
-              <FeaturedJobCard key={job.id} job={job} />
-            ))}
-          </div>
+
+          {/* Right Column: Trending/Stats */}
+          <aside className={styles.sideColumn}>
+            <div className={styles.sideSection}>
+              <h3 className={styles.sideTitle}>MARKET TRENDS</h3>
+              <div className={styles.trendList}>
+                <div className={styles.trendItem}>
+                  <span className={styles.trendLabel}>Active Roles</span>
+                  <span className={styles.trendValue}>{jobs.length * 12}</span>
+                </div>
+                <div className={styles.trendItem}>
+                  <span className={styles.trendLabel}>Top Sector</span>
+                  <span className={styles.trendValue}>ENGINEERING</span>
+                </div>
+                <div className={styles.trendItem}>
+                  <span className={styles.trendLabel}>Network Growth</span>
+                  <span className={styles.trendValue}>+12.4%</span>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.sideSection}>
+              <h3 className={styles.sideTitle}>QUICK ACTIONS</h3>
+              <div className={styles.actionGrid}>
+                <button onClick={() => navigate('/post-job')} className={styles.actionBtn}>Dispatch Job</button>
+                <button onClick={() => navigate('/saved-jobs')} className={styles.actionBtn}>Saved Items</button>
+                <button onClick={() => navigate('/applied-jobs')} className={styles.actionBtn}>My Briefcase</button>
+              </div>
+            </div>
+
+            <div className={styles.adBlock}>
+              <div className={styles.adLabel}>PROMOTION</div>
+              <p className={styles.adText}>Upgrade to LINKUP PREMIERE for detailed market insights and priority dispatches.</p>
+              <button className={styles.adBtn}>SUBSCRIBE NOW</button>
+            </div>
+          </aside>
         </div>
       </div>
     </PageTransition>

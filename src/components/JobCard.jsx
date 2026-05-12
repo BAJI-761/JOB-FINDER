@@ -1,11 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { MapPin, CheckCircle } from 'lucide-react';
+import { MapPin, CheckCircle, ArrowUpRight } from 'lucide-react';
 import CompanyLogo from './CompanyLogo';
 import BookmarkButton from './BookmarkButton';
-import JobTagChip from './JobTagChip';
-import ApplicantAvatars from './ApplicantAvatars';
 import styles from './JobCard.module.css';
-
 import { motion } from 'framer-motion';
 
 export default function JobCard({ job, index = 0 }) {
@@ -13,49 +10,42 @@ export default function JobCard({ job, index = 0 }) {
 
   return (
     <motion.div
-      className={styles.card}
+      className={styles.editorialCard}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, duration: 0.3 }}
-      whileHover={{ scale: 1.02, y: -2 }}
+      transition={{ delay: index * 0.05, duration: 0.4 }}
       onClick={() => navigate(`/job/${job.id}`)}
       role="article"
-      aria-label={`${job.title} at ${job.company}`}
     >
-      <div className={styles.topRow}>
-        <div className={styles.logoWrap}>
-          <CompanyLogo company={job.company} size="md" />
-        </div>
-        <div className={styles.info}>
-          <div className={styles.companyRow}>
-            <span className={styles.companyName}>{job.company}</span>
-            {job.trusted !== false && (
-              <span className={styles.trustedBadge}>
-                <CheckCircle size={10} /> Trusted
-              </span>
-            )}
-          </div>
-          <div className={styles.location}>
-            <MapPin size={10} style={{ display: 'inline', verticalAlign: 'middle' }} /> {job.location}
-          </div>
+      <div className={styles.header}>
+        <div className={styles.meta}>
+          <span className={styles.category}>{job.tags?.[0] || 'POSITION'}</span>
+          <span className={styles.divider}>/</span>
+          <span className={styles.date}>NEW DISPATCH</span>
         </div>
         <BookmarkButton jobId={job.id} />
       </div>
 
-      <div className={styles.jobTitle}>{job.title}</div>
-      <div className={styles.salary}>
-        ${job.salaryMin?.toLocaleString()} - ${job.salaryMax?.toLocaleString()}/yr
+      <div className={styles.body}>
+        <h3 className={styles.title}>{job.title}</h3>
+        <p className={styles.company}>
+          {job.company} {job.trusted !== false && <CheckCircle size={12} className={styles.trustedIcon} />}
+        </p>
       </div>
 
-      <div className={styles.tagRow}>
-        {(job.tags || []).slice(0, 3).map(tag => (
-          <JobTagChip key={tag} label={tag} />
-        ))}
-      </div>
-
-      <div className={styles.bottomRow}>
-        <ApplicantAvatars count={job.applicants} />
-        <button className={styles.applyBtn} onClick={(e) => { e.stopPropagation(); navigate(`/job/${job.id}`); }}>Apply</button>
+      <div className={styles.footer}>
+        <div className={styles.details}>
+          <div className={styles.detailItem}>
+            <MapPin size={12} />
+            <span>{job.location}</span>
+          </div>
+          <div className={styles.detailItem}>
+            <span className={styles.mono}>${job.salaryMin?.toLocaleString()} — ${job.salaryMax?.toLocaleString()}</span>
+          </div>
+        </div>
+        <div className={styles.action}>
+          <ArrowUpRight size={20} />
+        </div>
       </div>
     </motion.div>
   );

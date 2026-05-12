@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import CompanyLogo from './CompanyLogo';
+import { ArrowRight } from 'lucide-react';
 import BookmarkButton from './BookmarkButton';
-import ApplicantAvatars from './ApplicantAvatars';
 import styles from './FeaturedJobCard.module.css';
 
 export default function FeaturedJobCard({ job }) {
@@ -10,28 +9,34 @@ export default function FeaturedJobCard({ job }) {
 
   return (
     <motion.div 
-      className={styles.card} 
+      className={styles.spotlightCard} 
       onClick={() => navigate(`/job/${job.id}`)} 
-      role="article" 
-      aria-label={`${job.title} at ${job.company}`}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.98 }}
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+      whileHover={{ y: -4 }}
     >
-      <div className={styles.topRow}>
-        <div className={styles.companyInfo}>
-          <CompanyLogo company={job.company} size="sm" />
-          <span className={styles.companyName}>{job.company}</span>
+      <div className={styles.label}>TOP HEADLINE</div>
+      
+      <div className={styles.content}>
+        <h2 className={styles.title}>{job.title}</h2>
+        <div className={styles.companyRow}>
+          <span className={styles.company}>{job.company}</span>
+          <span className={styles.location}>{job.location}</span>
         </div>
-        <BookmarkButton jobId={job.id} light />
       </div>
-      <div className={styles.jobTitle}>{job.title}</div>
-      <div className={styles.salary}>${job.salaryMin?.toLocaleString()} - ${job.salaryMax?.toLocaleString()}/yr</div>
-      <div className={styles.bottomRow}>
-        <ApplicantAvatars count={job.applicants} light />
-        <button className={styles.applyBtn} onClick={(e) => { e.stopPropagation(); navigate(`/job/${job.id}`); }}>Apply</button>
+
+      <div className={styles.footer}>
+        <div className={styles.salary}>
+          ${job.salaryMin?.toLocaleString()} — ${job.salaryMax?.toLocaleString()}
+        </div>
+        <div className={styles.bookmark}>
+          <BookmarkButton jobId={job.id} />
+        </div>
+      </div>
+      
+      <div className={styles.readMore}>
+        <span>VIEW FULL SPEC</span>
+        <ArrowRight size={14} />
       </div>
     </motion.div>
   );

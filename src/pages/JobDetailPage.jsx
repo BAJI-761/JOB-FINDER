@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, CheckCircle, Briefcase, Clock, MapPin } from 'lucide-react';
+import { ArrowLeft, CheckCircle, MapPin, Globe, Clock, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import CompanyLogo from '../components/CompanyLogo';
 import BookmarkButton from '../components/BookmarkButton';
-import JobTagChip from '../components/JobTagChip';
 import Modal from '../components/Modal';
 import PageTransition from '../components/PageTransition';
 import styles from './JobDetailPage.module.css';
@@ -13,12 +11,10 @@ export default function JobDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { state, dispatch, isJobApplied } = useApp();
-  const [activeTab, setActiveTab] = useState('description');
-  const [expanded, setExpanded] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const job = state.jobs.find(j => j.id === id);
-  if (!job) return <div className="empty-state"><div className="empty-state-title">Job not found</div><button className="btn-secondary" onClick={() => navigate(-1)}>Go Back</button></div>;
+  if (!job) return <div className={styles.empty}>ENTRY NOT FOUND</div>;
 
   const applied = isJobApplied(job.id);
   const company = state.companies.find(c => c.name === job.company);
@@ -30,132 +26,125 @@ export default function JobDetailPage() {
   };
 
   return (
-    <PageTransition>
-      <div className={styles.page}>
-        <div className={styles.jobDetailLayout}>
-          {/* Main Content Column */}
-          <div className={styles.mainCol}>
-            {/* Top Nav */}
-            <div className={styles.topNav}>
-          <button className={styles.navBtn} onClick={() => navigate(-1)} aria-label="Go back"><ArrowLeft size={18} /></button>
-          <span className={styles.companyTitle}>{job.company} <CheckCircle size={14} color="#22C55E" /></span>
-          <BookmarkButton jobId={job.id} light />
-        </div>
-
-        {/* Company Logo */}
-        <div className={styles.logoSection}>
-          <div className={styles.logoCircle}>
-            <CompanyLogo company={job.company} size="lg" />
+    <PageTransition variant="newsprint">
+      <div className={styles.detailLayout}>
+        {/* Navigation / Meta */}
+        <nav className={styles.breadcrumb}>
+          <button className={styles.backBtn} onClick={() => navigate(-1)}>
+            <ArrowLeft size={16} />
+            <span>RETURN TO ARCHIVES</span>
+          </button>
+          <div className={styles.meta}>
+            <span className={styles.ref}>REF: {job.id.toUpperCase()}</span>
+            <span className={styles.divider}>|</span>
+            <span className={styles.status}>VERIFIED DISPATCH</span>
           </div>
-          <div className={styles.jobTitleText}>{job.title}</div>
-          <div className={styles.salaryText}>${job.salaryMin?.toLocaleString()} - ${job.salaryMax?.toLocaleString()}/yr</div>
-          <div className={styles.tagsRow}>
-            {(job.tags || []).map(tag => <JobTagChip key={tag} label={tag} variant="filled" />)}
+        </nav>
+
+        {/* Main Header Section */}
+        <header className={styles.header}>
+          <div className={styles.headerMain}>
+            <div className={styles.titleArea}>
+              <div className={styles.companyRow}>
+                <span className={styles.companyName}>{job.company}</span>
+                {job.trusted !== false && <CheckCircle size={14} className={styles.trustedIcon} />}
+              </div>
+              <h1 className={styles.jobTitle}>{job.title}</h1>
+            </div>
+            <div className={styles.actions}>
+              <BookmarkButton jobId={job.id} />
+              <button className={styles.applyBtn} onClick={handleApply} disabled={applied}>
+                {applied ? 'APPLICATION SENT' : 'INITIALIZE APPLICATION'}
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* Tabs (Mobile Only) */}
-        <div className={`${styles.tabs} ${styles.mobileTabs}`}>
-          <button className={`${styles.tab} ${activeTab === 'description' ? styles.active : ''}`} onClick={() => setActiveTab('description')}>Description</button>
-          <button className={`${styles.tab} ${activeTab === 'company' ? styles.active : ''}`} onClick={() => setActiveTab('company')}>Company</button>
-        </div>
-
-        {/* Stats */}
-        <div className={styles.statsGrid}>
-          <div className={styles.statCard}><div className={styles.statLabel}>Job Type</div><div className={styles.statValue}>{job.jobType}</div></div>
-          <div className={styles.statCard}><div className={styles.statLabel}>Working Hours</div><div className={styles.statValue}>{job.workingHours || '9 AM - 6 PM'}</div></div>
-          <div className={styles.statCard}><div className={styles.statLabel}>Workplace</div><div className={styles.statValue}>{job.workplaceType}</div></div>
-        </div>
-
-        {activeTab === 'description' ? (
-          <>
-            {/* Description */}
-            <div className={styles.detailSection}>
-              <div className={styles.detailTitle}>Job Details</div>
-              <div className={styles.detailText}>
-                {expanded ? job.description : (job.description || '').slice(0, 200) + '...'}
-              </div>
-              {(job.description || '').length > 200 && (
-                <button className={styles.readMore} onClick={() => setExpanded(!expanded)}>
-                  {expanded ? 'Show Less' : 'Read More'}
-                </button>
-              )}
+          <div className={styles.keyStats}>
+            <div className={styles.stat}>
+              <span className={styles.statLabel}>LOCATION</span>
+              <span className={styles.statValue}>{job.location}</span>
             </div>
-
-            {/* Info Grid */}
-            <div className={styles.infoGrid}>
-              <div className={styles.infoCard}>
-                <div className={styles.infoLabel}>Experience</div>
-                <div className={styles.infoValue}>{job.experience || '0-2 years'}</div>
-              </div>
-              <div className={styles.infoCard}>
-                <div className={styles.infoLabel}>Location</div>
-                <div className={styles.infoValue}>{job.location}</div>
-              </div>
+            <div className={styles.stat}>
+              <span className={styles.statLabel}>COMPENSATION</span>
+              <span className={styles.statValue}>${job.salaryMin?.toLocaleString()} — ${job.salaryMax?.toLocaleString()}</span>
             </div>
+            <div className={styles.stat}>
+              <span className={styles.statLabel}>WORK STYLE</span>
+              <span className={styles.statValue}>{job.workplaceType}</span>
+            </div>
+          </div>
+        </header>
 
-            {/* Skills */}
-            {job.skills && job.skills.length > 0 && (
-              <div className={styles.detailSection}>
-                <div className={styles.detailTitle}>Required Skills</div>
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {job.skills.map(s => <JobTagChip key={s} label={s} variant="filled" />)}
+        {/* Content Grid */}
+        <div className={styles.grid}>
+          <main className={styles.mainContent}>
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>POSITION SPECIFICATION</h2>
+              <div className={styles.description}>
+                {job.description || 'Detailed specifications for this position are available upon successful application initialization. This role requires a high level of expertise and professional commitment.'}
+              </div>
+            </section>
+
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>CONTRIBUTOR REQUIREMENTS</h2>
+              <div className={styles.requirementsList}>
+                {job.skills?.map(skill => (
+                  <div key={skill} className={styles.requirementItem}>
+                    <ShieldCheck size={16} className={styles.reqIcon} />
+                    <span>{skill}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className={styles.section}>
+              <h2 className={styles.sectionTitle}>EDITORIAL NOTE</h2>
+              <p className={styles.note}>
+                All dispatches on the LinkUp Network are subject to strict editorial standards. This position has been verified by the LinkUp trust protocol. Applicants are advised to review their dossiers for accuracy before initializing an application.
+              </p>
+            </section>
+          </main>
+
+          <aside className={styles.sidebar}>
+            <div className={styles.companyDossier}>
+              <h3 className={styles.sidebarTitle}>COMPANY DOSSIER</h3>
+              <div className={styles.companyInfo}>
+                <div className={styles.infoItem}>
+                  <Globe size={14} />
+                  <span>{company?.industry || 'Technology Sector'}</span>
+                </div>
+                <div className={styles.infoItem}>
+                  <Clock size={14} />
+                  <span>Founded in {company?.founded || '2018'}</span>
+                </div>
+                <div className={styles.infoItem}>
+                  <MapPin size={14} />
+                  <span>Headquartered in {job.location.split(',')[1]?.trim() || 'San Francisco'}</span>
                 </div>
               </div>
-            )}
-          </>
-        ) : (
-          <div className={styles.detailSection}>
-            <div className={styles.detailTitle}>About {job.company}</div>
-            <div className={styles.detailText}>{company?.description || 'Company information coming soon.'}</div>
-            {company && (
-              <div className={styles.infoGrid} style={{ marginTop: 16, padding: 0 }}>
-                <div className={styles.infoCard}><div className={styles.infoLabel}>Industry</div><div className={styles.infoValue}>{company.industry}</div></div>
-                <div className={styles.infoCard}><div className={styles.infoLabel}>Company Size</div><div className={styles.infoValue}>{company.size}</div></div>
-                <div className={styles.infoCard}><div className={styles.infoLabel}>Founded</div><div className={styles.infoValue}>{company.founded}</div></div>
-                <div className={styles.infoCard}><div className={styles.infoLabel}>Rating</div><div className={styles.infoValue}>⭐ {company.rating}</div></div>
-              </div>
-            )}
-          </div>
-        )}
+              <p className={styles.companyBio}>
+                {company?.description || 'This organization is a verified participant in the LinkUp Global Network, specializing in advanced professional ecosystems.'}
+              </p>
+              <button className={styles.viewCompanyBtn} onClick={() => navigate(`/company/${job.company}`)}>
+                VIEW FULL DOSSIER
+                <ArrowRight size={14} />
+              </button>
+            </div>
 
-        {/* Apply Bar */}
-        <div className={styles.applyBar}>
-          <button className={styles.applyBtn} onClick={handleApply} disabled={applied}>
-            {applied ? '✅ Applied' : 'Apply Now'}
-            {!applied && (
-              <span className={styles.chevrons}>
-                {[0,1,2,3,4].map(i => <span key={i} className="chevron-animate" style={{ fontSize: 14 }}>›</span>)}
-              </span>
-            )}
-          </button>
+            <div className={styles.disclaimerBox}>
+              <div className={styles.disclaimerLabel}>LEGAL DISPATCH</div>
+              <p>LinkUp acts solely as a verification layer. All employment contracts are negotiated independently between the contributor and the verified organization.</p>
+            </div>
+          </aside>
         </div>
-        </div> {/* End Main Col */}
-
-        {/* Right Sidebar (Desktop only) */}
-        <div className={styles.sideCol}>
-          <div className="card">
-            <div className={styles.detailTitle}>About {job.company}</div>
-            <div className={styles.detailText}>{company?.description || 'Company information coming soon.'}</div>
-            {company && (
-              <div className={styles.infoGrid} style={{ marginTop: 16, padding: 0 }}>
-                <div className={styles.infoCard}><div className={styles.infoLabel}>Industry</div><div className={styles.infoValue}>{company.industry}</div></div>
-                <div className={styles.infoCard}><div className={styles.infoLabel}>Company Size</div><div className={styles.infoValue}>{company.size}</div></div>
-                <div className={styles.infoCard}><div className={styles.infoLabel}>Founded</div><div className={styles.infoValue}>{company.founded}</div></div>
-                <div className={styles.infoCard}><div className={styles.infoLabel}>Rating</div><div className={styles.infoValue}>⭐ {company.rating}</div></div>
-              </div>
-            )}
-          </div>
-        </div>
-        </div> {/* End Layout Container */}
 
         {/* Success Modal */}
         <Modal
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           type="success"
-          title="Application Sent! 🎉"
-          message={`Your application for ${job.title} at ${job.company} has been submitted successfully.`}
+          title="APPLICATION INITIALIZED"
+          message={`Your professional dossier has been dispatched to ${job.company} for the ${job.title} specification.`}
         />
       </div>
     </PageTransition>

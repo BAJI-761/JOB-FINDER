@@ -1,34 +1,46 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Bell, Briefcase, MessageCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Bell } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import PageTransition from '../components/PageTransition';
-
-const typeIcons = { application: '📋', job_match: '🎯', message: '💬', reminder: '⏰', system: '🔔' };
+import styles from './NotificationsPage.module.css';
 
 export default function NotificationsPage() {
   const { state, dispatch } = useApp();
   const navigate = useNavigate();
 
   return (
-    <PageTransition>
-      <div className="page-content" style={{ padding: 'var(--page-padding)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}><ArrowLeft size={22} /></button>
-            <h1 style={{ fontSize: 20, fontWeight: 700 }}>Notifications</h1>
+    <PageTransition variant="newsprint">
+      <div className={styles.notifLayout}>
+        <header className={styles.header}>
+          <div className={styles.headerTop}>
+            <button className={styles.backBtn} onClick={() => navigate(-1)}>
+              <ArrowLeft size={16} />
+              <span>RETURN</span>
+            </button>
+            <div className={styles.meta}>VOL. 24 / NETWORK UPDATES</div>
           </div>
-          <button className="btn-secondary" style={{ fontSize: 11 }} onClick={() => dispatch({ type: 'MARK_ALL_NOTIFICATIONS_READ' })}>Mark all read</button>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div className={styles.titleRow}>
+            <h1 className={styles.mainTitle}>Network Dispatches</h1>
+            <button className={styles.markRead} onClick={() => dispatch({ type: 'MARK_ALL_NOTIFICATIONS_READ' })}>
+              MARK ALL AS READ
+            </button>
+          </div>
+        </header>
+
+        <div className={styles.list}>
           {state.notifications.map((n, i) => (
-            <div key={n.id} className="card stagger-enter" style={{ animationDelay: `${i * 40}ms`, display: 'flex', alignItems: 'flex-start', gap: 12, padding: 14, opacity: n.read ? 0.7 : 1, cursor: 'pointer' }} onClick={() => dispatch({ type: 'MARK_NOTIFICATION_READ', payload: n.id })}>
-              <span style={{ fontSize: 24, flexShrink: 0 }}>{typeIcons[n.type] || '🔔'}</span>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 13, fontWeight: n.read ? 400 : 600, lineHeight: 1.4 }}>{n.title}</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{n.message}</div>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>{n.time}</div>
+            <div 
+              key={n.id} 
+              className={`${styles.notifItem} ${!n.read ? styles.unread : ''}`}
+              onClick={() => dispatch({ type: 'MARK_NOTIFICATION_READ', payload: n.id })}
+            >
+              <div className={styles.itemHeader}>
+                <span className={styles.typeLabel}>{n.type.toUpperCase()}</span>
+                <span className={styles.time}>{n.time}</span>
               </div>
-              {!n.read && <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--primary)', flexShrink: 0, marginTop: 4 }} />}
+              <h3 className={styles.itemTitle}>{n.title}</h3>
+              <p className={styles.itemMessage}>{n.message}</p>
+              {!n.read && <div className={styles.unreadIndicator} />}
             </div>
           ))}
         </div>

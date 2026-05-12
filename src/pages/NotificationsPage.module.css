@@ -1,0 +1,120 @@
+.notifLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.header {
+  border-bottom: 3px solid var(--border);
+  padding-bottom: 30px;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.mainTitle {
+  font-family: var(--font-display-family);
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.markRead {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--accent);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.notifItem {
+  padding: 24px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: all 150ms ease;
+}
+
+.notifItem:hover {
+  background: var(--bg-card-hover);
+}
+
+.unread {
+  background: var(--bg-card);
+}
+
+.unreadIndicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent);
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.typeLabel {
+  color: var(--accent);
+}
+
+.time {
+  color: var(--text-muted);
+}
+
+.itemTitle {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.itemMessage {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}

@@ -1,153 +1,131 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronDown, SlidersHorizontal } from 'lucide-react';
+import { Search, Filter, Archive, Bookmark, CheckCircle, SlidersHorizontal } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import PageTransition from '../components/PageTransition';
-import SearchBar from '../components/SearchBar';
-import FilterChips from '../components/FilterChips';
 import JobCard from '../components/JobCard';
-import SavedAppliedToggle from '../components/SavedAppliedToggle';
 import styles from './JobsPage.module.css';
 
-const categoryChips = ['UI/UX Designer', 'Frontend Dev', 'Backend Dev', 'Data Science', 'DevOps', 'Product Manager'];
+const categories = ['Engineering', 'Design', 'Product', 'Data Science', 'Operations'];
 
 export default function JobsPage() {
   const { state, dispatch, getFilteredJobs, getSavedJobs, getUserApplications } = useApp();
   const navigate = useNavigate();
   const [toggleView, setToggleView] = useState(null);
   const jobs = getFilteredJobs();
-  const user = state.currentUser;
 
   let displayJobs = jobs;
+  let viewTitle = "LATEST DISPATCHES";
+
   if (toggleView === 'saved') {
     displayJobs = getSavedJobs();
+    viewTitle = "BOOKMARKED ENTRIES";
   } else if (toggleView === 'applied') {
     const appIds = getUserApplications().map(a => a.jobId);
     displayJobs = state.jobs.filter(j => appIds.includes(j.id));
+    viewTitle = "MY APPLICATIONS";
   }
 
   return (
-    <PageTransition>
-      <div className={`page-content ${styles.jobsLayout}`}>
-        {/* Left Sidebar (Desktop only) */}
-        <div className={styles.sidebarLeft}>
-          <div className="card">
-            <h3 style={{ fontSize: 16, marginBottom: 16 }}>Filters</h3>
-            <div className="form-group">
-              <label className="form-label">Search</label>
-              <SearchBar
-                value={state.searchQuery}
-                onChange={v => dispatch({ type: 'SET_SEARCH', payload: v })}
-                variant="jobs"
-              />
-            </div>
-            <div className="form-group" style={{ marginTop: 16 }}>
-              <label className="form-label">Job Type</label>
-              <select className="form-select" style={{ height: 40, fontSize: 13 }}>
-                <option>All Types</option>
-                <option>Full-time</option>
-                <option>Part-time</option>
-                <option>Contract</option>
-                <option>Remote</option>
-              </select>
+    <PageTransition variant="newsprint">
+      <div className={styles.jobsLayout}>
+        {/* Left Sidebar: Advanced Filtering */}
+        <aside className={styles.sidebar}>
+          <div className={styles.sidebarSection}>
+            <h3 className={styles.sideTitle}>NAVIGATE ARCHIVES</h3>
+            <div className={styles.sideNav}>
+              <button 
+                className={`${styles.sideNavBtn} ${toggleView === null ? styles.active : ''}`}
+                onClick={() => setToggleView(null)}
+              >
+                <Archive size={16} />
+                <span>All Editions</span>
+              </button>
+              <button 
+                className={`${styles.sideNavBtn} ${toggleView === 'saved' ? styles.active : ''}`}
+                onClick={() => setToggleView('saved')}
+              >
+                <Bookmark size={16} />
+                <span>Saved Items</span>
+              </button>
+              <button 
+                className={`${styles.sideNavBtn} ${toggleView === 'applied' ? styles.active : ''}`}
+                onClick={() => setToggleView('applied')}
+              >
+                <CheckCircle size={16} />
+                <span>My Briefcase</span>
+              </button>
             </div>
           </div>
-          
-          <div className="card">
-            <h3 style={{ fontSize: 16, marginBottom: 12 }}>Categories</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {categoryChips.map(c => (
-                <label key={c} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer' }}>
-                  <input type="checkbox" checked={state.activeCategory === c} onChange={() => dispatch({ type: 'SET_CATEGORY', payload: state.activeCategory === c ? null : c })} />
-                  {c}
+
+          <div className={styles.sidebarSection}>
+            <h3 className={styles.sideTitle}>CATEGORIES</h3>
+            <div className={styles.categoryList}>
+              {categories.map(c => (
+                <label key={c} className={styles.catLabel}>
+                  <input 
+                    type="checkbox" 
+                    checked={state.activeCategory === c} 
+                    onChange={() => dispatch({ type: 'SET_CATEGORY', payload: state.activeCategory === c ? null : c })} 
+                  />
+                  <span>{c}</span>
                 </label>
               ))}
             </div>
           </div>
 
-          <div className="card">
-            <h3 style={{ fontSize: 16, marginBottom: 12 }}>My Jobs</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <button 
-                className={`btn-outline ${toggleView === null ? 'active' : ''}`}
-                style={{ width: '100%', justifyContent: 'flex-start', borderColor: toggleView === null ? 'var(--primary)' : '' }}
-                onClick={() => setToggleView(null)}
-              >
-                All Jobs
-              </button>
-              <button 
-                className={`btn-outline ${toggleView === 'saved' ? 'active' : ''}`}
-                style={{ width: '100%', justifyContent: 'flex-start', borderColor: toggleView === 'saved' ? 'var(--primary)' : '' }}
-                onClick={() => setToggleView('saved')}
-              >
-                Saved Jobs
-              </button>
-              <button 
-                className={`btn-outline ${toggleView === 'applied' ? 'active' : ''}`}
-                style={{ width: '100%', justifyContent: 'flex-start', borderColor: toggleView === 'applied' ? 'var(--primary)' : '' }}
-                onClick={() => setToggleView('applied')}
-              >
-                Applied Jobs
-              </button>
+          <div className={styles.sidebarSection}>
+            <h3 className={styles.sideTitle}>REFINE BY</h3>
+            <div className={styles.filterGroup}>
+              <label className={styles.filterLabel}>Contract Type</label>
+              <select className={styles.filterSelect}>
+                <option>All Types</option>
+                <option>Full-time</option>
+                <option>Part-time</option>
+                <option>Remote</option>
+              </select>
             </div>
           </div>
-        </div>
+        </aside>
 
-        {/* Main Content */}
-        <div className={styles.mainContent}>
-          <div className={styles.topBar}>
-            <div className={styles.searchFlex}>
-              <SearchBar
-                value={state.searchQuery}
-                onChange={v => dispatch({ type: 'SET_SEARCH', payload: v })}
-                variant="jobs"
-              />
+        {/* Main Feed */}
+        <div className={styles.mainFeed}>
+          <header className={styles.feedHeader}>
+            <div className={styles.headerTop}>
+              <span className={styles.vol}>VOL. 24 / NO. 04</span>
+              <span className={styles.edition}>{viewTitle}</span>
             </div>
-            <div className={styles.userAvatar} onClick={() => navigate('/profile')}>
-              {user?.name?.[0]?.toUpperCase() || 'U'}
+            <h1 className={styles.mainTitle}>The Dispatch Archives</h1>
+            <div className={styles.headerBottom}>
+              <div className={styles.searchBar}>
+                <Search size={18} />
+                <input 
+                  type="text" 
+                  placeholder="Search keywords, roles, companies..." 
+                  value={state.searchQuery}
+                  onChange={(e) => dispatch({ type: 'SET_SEARCH', payload: e.target.value })}
+                />
+              </div>
+              <div className={styles.resultsCount}>
+                Showing {displayJobs.length} verified listings
+              </div>
             </div>
+          </header>
+
+          <div className={styles.jobsGrid}>
+            {displayJobs.length > 0 ? (
+              displayJobs.map((job, i) => (
+                <JobCard key={job.id} job={job} index={i} />
+              ))
+            ) : (
+              <div className={styles.emptyState}>
+                <h3 className={styles.emptyTitle}>No Entries Found</h3>
+                <p className={styles.emptyText}>The archives are currently empty for this specific criteria. Please refine your parameters.</p>
+                <button className={styles.resetBtn} onClick={() => dispatch({ type: 'SET_SEARCH', payload: '' })}>CLEAR SEARCH</button>
+              </div>
+            )}
           </div>
-
-          <div className={styles.mobileFilters}>
-            <div className={styles.filterRow}>
-              <button className={styles.filterBtn}>
-                <SlidersHorizontal size={14} /> Filters <ChevronDown size={12} />
-              </button>
-              <button className={styles.filterBtn}>
-                {state.sortBy} <ChevronDown size={12} />
-              </button>
-            </div>
-
-            <div className={styles.chipsWrap}>
-              <FilterChips
-                chips={categoryChips}
-                activeChip={state.activeCategory}
-                onChipClick={c => dispatch({ type: 'SET_CATEGORY', payload: state.activeCategory === c ? null : c })}
-              />
-            </div>
-          </div>
-
-        <div className={styles.resultsRow}>
-          <span className={styles.resultsCount}>{displayJobs.length} Jobs Found</span>
-          <button className={styles.seeAll}>See all</button>
         </div>
-
-        <div className={styles.jobsList}>
-          {displayJobs.length > 0 ? (
-            displayJobs.map((job, i) => <JobCard key={job.id} job={job} index={i} />)
-          ) : (
-            <div className="empty-state">
-              <div className="empty-state-icon">📋</div>
-              <div className="empty-state-title">No jobs found</div>
-              <div className="empty-state-text">Try adjusting your filters or search terms</div>
-            </div>
-          )}
-        </div>
-
-        <div className={styles.mobileFilters}>
-          <SavedAppliedToggle active={toggleView} onToggle={v => setToggleView(toggleView === v ? null : v)} />
-        </div>
-        </div> {/* End Main Content */}
       </div>
     </PageTransition>
   );

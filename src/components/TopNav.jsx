@@ -36,8 +36,12 @@ export default function TopNav() {
       <div className={styles.container}>
         {/* Logo */}
         <div className={styles.logoArea} onClick={() => navigate('/home')} style={{ cursor: 'pointer' }}>
-          <div className={styles.logoIcon} style={{ fontFamily: 'var(--font-display-family)' }}>LU</div>
-          <span className={styles.logoText} style={{ fontFamily: 'var(--font-display-family)' }}>LinkUp</span>
+          <span className={styles.logoText} style={{ fontFamily: 'var(--font-display-family)', fontSize: '32px', fontWeight: 900, letterSpacing: '-1px' }}>LINK.UP</span>
+        </div>
+
+        {/* Newspaper Metadata (Desktop Only) */}
+        <div className={styles.metadataBox}>
+          VOL. 1 &nbsp;|&nbsp; {new Date().toLocaleDateString('en-US')} &nbsp;|&nbsp; TECH EDITION
         </div>
 
         {/* Desktop Navigation */}
@@ -61,7 +65,6 @@ export default function TopNav() {
                 className={`${styles.navItem} ${isActive ? styles.active : ''}`}
                 onClick={() => navigate(item.path)}
               >
-                <Icon size={22} />
                 <span className={styles.navLabel}>{item.label}</span>
                 {item.badge > 0 && <span className={styles.badge}>{item.badge}</span>}
               </button>
@@ -72,18 +75,15 @@ export default function TopNav() {
         {/* User / Actions */}
         <div className={styles.userActions}>
           {isEmployer && (
-            <button className="btn-secondary" style={{ display: 'none' }} onClick={() => navigate('/post-job')}>
-              <Plus size={16} /> Post Job
+            <button className="btn-primary" onClick={() => navigate('/post-job')}>
+              POST JOB
             </button>
           )}
-          
-          <div 
-            className={styles.avatar} 
-            onClick={() => navigate('/profile')}
-            style={{ display: 'none' }} // Hidden on mobile, shown on desktop (handled in CSS usually, but let's handle via media queries ideally. Will just make it flex below)
-          >
-            {state.currentUser?.name?.[0]?.toUpperCase() || 'U'}
-          </div>
+          {!isEmployer && (
+             <button className="btn-primary" onClick={() => navigate('/jobs')}>
+              SUBSCRIBE
+            </button>
+          )}
 
           <button className={styles.mobileMenuBtn} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
