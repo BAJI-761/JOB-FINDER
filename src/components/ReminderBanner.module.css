@@ -1,14 +1,15 @@
 .banner {
-  background: linear-gradient(135deg, #3B9EE8 0%, #2A7DC9 50%, #1D6AAF 100%);
+  background: linear-gradient(135deg, #1A2517 0%, #243120 50%, #2B3D26 100%);
   border-radius: var(--radius-lg);
   padding: 16px;
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #FFFFFF;
+  color: var(--text-primary);
   box-shadow: var(--shadow-featured);
   position: relative;
   overflow: hidden;
+  border: 1px solid var(--border);
 }
 .banner::after {
   content: '';
@@ -24,7 +25,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.2);
+  background: rgba(172, 200, 162, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,11 +33,11 @@
   backdrop-filter: blur(4px);
 }
 .textBlock { flex: 1; }
-.title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.title { font-size: 13px; font-weight: 600; margin-bottom: 2px; color: var(--primary); }
 .subtitle { font-size: 11px; opacity: 0.85; }
 .countdown { display: flex; gap: 4px; align-items: center; }
 .digitBox {
-  background: rgba(255,255,255,0.2);
+  background: rgba(172, 200, 162, 0.15);
   backdrop-filter: blur(4px);
   border-radius: 6px;
   padding: 4px 6px;

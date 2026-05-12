@@ -9,7 +9,7 @@ export default function ReminderBanner() {
   return (
     <div className={styles.banner} id="reminder-banner">
       <div className={styles.iconCircle}>
-        <Clock size={20} color="#fff" />
+        <Clock size={20} color="var(--primary)" />
       </div>
       <div className={styles.textBlock}>
         <div className={styles.title}>Application Reminder!</div>

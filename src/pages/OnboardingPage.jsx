@@ -55,7 +55,7 @@ export default function OnboardingPage() {
         position: 'relative',
         borderRadius: 'var(--radius-lg)',
         overflow: 'hidden',
-        background: '#fff',
+        background: 'var(--bg-card)',
         boxShadow: 'var(--shadow-card)',
         display: 'flex',
         alignItems: 'center',
@@ -78,7 +78,7 @@ export default function OnboardingPage() {
         </ErrorBoundary>
         
         {isLoading && !hasError && (
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-card)' }}>
              <div className="spinner" style={{ width: 40, height: 40, border: '4px solid var(--primary-light)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
           </div>
         )}

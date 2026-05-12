@@ -38,7 +38,7 @@ export default function RegisterPage() {
             {['candidate', 'employer'].map(r => (
               <button key={r} onClick={() => setRole(r)} style={{
                 flex: 1, padding: '10px 0', borderRadius: 9999, fontSize: 13, fontWeight: 600, border: 'none', cursor: 'pointer',
-                background: role === r ? '#fff' : 'transparent', color: role === r ? 'var(--text-primary)' : 'var(--text-muted)',
+                background: role === r ? 'var(--primary)' : 'transparent', color: role === r ? 'var(--bg-page)' : 'var(--text-muted)',
                 boxShadow: role === r ? 'var(--shadow-sm)' : 'none', transition: 'all 200ms ease'
               }}>
                 {r === 'candidate' ? '👤 Candidate' : '🏢 Employer'}

@@ -34,7 +34,7 @@
 .applyBtn {
   padding: 8px 20px;
   background: var(--primary);
-  color: #fff;
+  color: var(--bg-page);
   border-radius: var(--radius-full);
   font-size: 12px;
   font-weight: 600;

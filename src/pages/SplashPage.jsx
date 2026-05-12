@@ -47,27 +47,50 @@ export default function SplashPage() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #3B9EE8 0%, #2A7DC9 50%, #1D6AAF 100%)',
+      background: 'linear-gradient(135deg, #1A2517 0%, #243120 50%, #2B3D26 100%)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      color: '#FFFFFF',
+      color: 'var(--text-primary)',
       position: 'relative',
       overflow: 'hidden'
     }}>
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
         <Canvas camera={{ position: [0, 0, 1] }}>
-          <ParticleBackground />
+          <ParticleBackground color="#ACC8A2" />
         </Canvas>
       </div>
       
       <div ref={textRef} style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div className="anime-el" style={{ width: 80, height: 80, borderRadius: 20, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24, backdropFilter: 'blur(10px)' }}>
-          <span style={{ fontSize: 36, fontWeight: 800, fontFamily: 'var(--font-display-family)' }}>LU</span>
+        <div className="anime-el" style={{ 
+          width: 80, 
+          height: 80, 
+          borderRadius: 22, 
+          background: 'rgba(172, 200, 162, 0.12)', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          marginBottom: 24, 
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(172, 200, 162, 0.2)'
+        }}>
+          <span style={{ 
+            fontSize: 36, 
+            fontWeight: 800, 
+            fontFamily: 'var(--font-display-family)',
+            color: 'var(--primary)'
+          }}>LU</span>
         </div>
-        <h1 className="anime-el" style={{ fontSize: 28, fontWeight: 800, marginBottom: 8, fontFamily: 'var(--font-display-family)' }}>LinkUp</h1>
-        <p className="anime-el" style={{ fontSize: 14, opacity: 0.8 }}>Your Network Starts Here</p>
+        <h1 className="anime-el" style={{ 
+          fontSize: 32, 
+          fontWeight: 800, 
+          marginBottom: 8, 
+          fontFamily: 'var(--font-display-family)',
+          color: 'var(--primary)',
+          letterSpacing: '1px'
+        }}>LinkUp</h1>
+        <p className="anime-el" style={{ fontSize: 14, opacity: 0.8, color: 'var(--text-secondary)' }}>Your Network Starts Here</p>
       </div>
     </div>
   );
