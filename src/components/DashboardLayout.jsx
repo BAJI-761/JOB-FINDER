@@ -28,32 +28,17 @@ const DashboardLayout = ({ children }) => {
   const brandRef = useRef(null);
 
   useEffect(() => {
-    // Magnetic effect for brand
-    const brand = brandRef.current;
-    if (!brand) return;
-
     const onMouseMove = (e) => {
       const { clientX, clientY } = e;
       
       // Update global CSS variables for ambient background
       document.documentElement.style.setProperty('--mouse-x', `${clientX}px`);
       document.documentElement.style.setProperty('--mouse-y', `${clientY}px`);
-
-      const { left, top, width, height } = brand.getBoundingClientRect();
-      const x = (clientX - (left + width / 2)) * 0.2;
-      const y = (clientY - (top + height / 2)) * 0.2;
-      gsap.to(brand, { x, y, duration: 0.3, ease: 'power2.out' });
-    };
-
-    const onMouseLeave = () => {
-      gsap.to(brand, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
     };
 
     window.addEventListener('mousemove', onMouseMove);
-    brand.addEventListener('mouseleave', onMouseLeave);
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
-      brand.removeEventListener('mouseleave', onMouseLeave);
     };
   }, []);
 
@@ -78,7 +63,7 @@ const DashboardLayout = ({ children }) => {
       {/* Editorial Sidebar (Desktop) */}
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
-          <div ref={brandRef} className={styles.brandContainer}>
+          <div className={styles.brandContainer}>
             <h1 className={styles.brand} onClick={() => navigate('/home')}>LinkUp</h1>
           </div>
           <p className={styles.edition}>Edition No. 124</p>
