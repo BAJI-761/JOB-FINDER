@@ -78,11 +78,17 @@ export default function JobsPage() {
             <h3 className={styles.sideTitle}>REFINE BY</h3>
             <div className={styles.filterGroup}>
               <label className={styles.filterLabel}>Contract Type</label>
-              <select className={styles.filterSelect}>
+              <select 
+                className={styles.filterSelect}
+                value={state.activeJobFilter}
+                onChange={(e) => dispatch({ type: 'SET_JOB_FILTER', payload: e.target.value })}
+              >
                 <option>All Types</option>
                 <option>Full-time</option>
                 <option>Part-time</option>
                 <option>Remote</option>
+                <option>Freelance</option>
+                <option>Internship</option>
               </select>
             </div>
           </div>
@@ -121,7 +127,16 @@ export default function JobsPage() {
               <div className={styles.emptyState}>
                 <h3 className={styles.emptyTitle}>No Entries Found</h3>
                 <p className={styles.emptyText}>The archives are currently empty for this specific criteria. Please refine your parameters.</p>
-                <button className={styles.resetBtn} onClick={() => dispatch({ type: 'SET_SEARCH', payload: '' })}>CLEAR SEARCH</button>
+                <button 
+                  className={styles.resetBtn} 
+                  onClick={() => {
+                    dispatch({ type: 'SET_SEARCH', payload: '' });
+                    dispatch({ type: 'SET_JOB_FILTER', payload: 'All Editions' });
+                    dispatch({ type: 'SET_CATEGORY', payload: null });
+                  }}
+                >
+                  CLEAR ALL FILTERS
+                </button>
               </div>
             )}
           </div>

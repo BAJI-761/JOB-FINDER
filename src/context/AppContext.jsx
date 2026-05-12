@@ -380,18 +380,22 @@ export function AppProvider({ children }) {
         j.location.toLowerCase().includes(q)
       );
     }
-    if (state.activeJobFilter && state.activeJobFilter !== 'See All') {
+    if (state.activeJobFilter && !['See All', 'All Editions', 'All Types'].includes(state.activeJobFilter)) {
       const filterMap = {
         'Full Time': 'Full-time',
+        'Full-time': 'Full-time',
         'Part Time': 'Part-time',
+        'Part-time': 'Part-time',
         'Freelance': 'Freelance',
         'Remote': 'Remote',
         'Internship': 'Internship'
       };
-      const mapped = filterMap[state.activeJobFilter];
-      if (mapped) {
-        filtered = filtered.filter(j => j.jobType === mapped || j.workplaceType === mapped || j.tags.includes(mapped));
-      }
+      const mapped = filterMap[state.activeJobFilter] || state.activeJobFilter;
+      filtered = filtered.filter(j => 
+        j.jobType === mapped || 
+        j.workplaceType === mapped || 
+        (j.tags && j.tags.includes(mapped))
+      );
     }
     if (state.activeCategory) {
       const cat = state.activeCategory.toLowerCase();
