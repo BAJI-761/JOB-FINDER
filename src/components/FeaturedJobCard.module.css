@@ -36,14 +36,20 @@
   opacity: 1;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
 .label {
   font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.2em;
   color: var(--accent);
-  position: relative;
-  z-index: 2;
 }
 
 .content {

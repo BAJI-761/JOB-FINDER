@@ -86,10 +86,17 @@ export default function JobCard({ job, index = 0 }) {
       </div>
 
       <div className={styles.body}>
-        <h3 className={styles.title}>{job.title}</h3>
-        <p className={styles.company}>
-          {job.company} {job.trusted !== false && <CheckCircle size={12} className={styles.trustedIcon} />}
-        </p>
+        <div className={styles.mainContent}>
+          <div className={styles.logoWrapper}>
+            <CompanyLogo company={job.company} size="sm" />
+          </div>
+          <div className={styles.textWrapper}>
+            <h3 className={styles.title}>{job.title}</h3>
+            <p className={styles.company}>
+              {job.company} {job.trusted !== false && <CheckCircle size={12} className={styles.trustedIcon} />}
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className={styles.footer}>

@@ -74,6 +74,21 @@
   z-index: 2;
 }
 
+.mainContent {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.logoWrapper {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.textWrapper {
+  flex: 1;
+}
+
 .title {
   font-family: var(--font-serif);
   font-size: 24px;

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import CompanyLogo from './CompanyLogo';
 import BookmarkButton from './BookmarkButton';
 import styles from './FeaturedJobCard.module.css';
 import gsap from 'gsap';
@@ -74,7 +75,10 @@ export default function FeaturedJobCard({ job }) {
       animate={{ opacity: 1, x: 0 }}
       style={{ perspective: '1000px' }}
     >
-      <div className={styles.label}>TOP HEADLINE</div>
+      <div className={styles.header}>
+        <div className={styles.label}>TOP HEADLINE</div>
+        <CompanyLogo company={job.company} size="sm" />
+      </div>
       
       <div className={styles.content}>
         <h2 className={styles.title}>{job.title}</h2>
