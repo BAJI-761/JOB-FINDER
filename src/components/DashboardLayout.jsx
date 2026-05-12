@@ -12,9 +12,7 @@ import {
   Menu,
   X,
   Sun,
-  Moon,
-  Zap,
-  Clock
+  Moon
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import styles from './DashboardLayout.module.css';
@@ -23,44 +21,27 @@ import SmoothScroll from './SmoothScroll';
 import gsap from 'gsap';
 
 const DashboardLayout = ({ children }) => {
+  const { state, dispatch } = useApp();
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [showNotifications, setShowNotifications] = React.useState(false);
-  const { state, dispatch, getUnreadNotificationCount } = useApp();
-  const unreadCount = getUnreadNotificationCount();
-  const notifRef = useRef(null);
+  const [isNotifOpen, setIsNotifOpen] = React.useState(false);
   const brandRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (notifRef.current && !notifRef.current.contains(event.target)) {
-        setShowNotifications(false);
-      }
+    const onMouseMove = (e) => {
+      const { clientX, clientY } = e;
+      
+      // Update global CSS variables for ambient background
+      document.documentElement.style.setProperty('--mouse-x', `${clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${clientY}px`);
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    window.addEventListener('mousemove', onMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+    };
   }, []);
-
-  const formatTime = (dateStr) => {
-    const date = new Date(dateStr);
-    const now = new Date();
-    const diff = Math.floor((now - date) / 1000);
-    if (diff < 60) return 'Just Now';
-    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
-    return `${Math.floor(diff / 86400)}d ago`;
-  };
-
-  const getNotifIcon = (type) => {
-    switch(type) {
-      case 'application_update': return <Briefcase size={14} />;
-      case 'job_match': return <Zap size={14} />;
-      case 'message': return <MessageSquare size={14} />;
-      case 'reminder': return <Clock size={14} />;
-      default: return <Bell size={14} />;
-    }
-  };
 
   const handleLogout = () => {
     dispatch({ type: 'LOGOUT' });
@@ -74,60 +55,6 @@ const DashboardLayout = ({ children }) => {
     { icon: User, label: 'Dossier', path: '/profile' },
     { icon: Settings, label: 'Settings', path: '/settings' },
   ];
-
-  const NotificationPanel = () => (
-    <motion.div 
-      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-      className={styles.notifPanel}
-    >
-      <div className={styles.notifHeader}>
-        <h3 className={styles.notifTitle}>Notifications</h3>
-        {unreadCount > 0 && (
-          <button 
-            className={styles.markAllBtn}
-            onClick={() => dispatch({ type: 'MARK_ALL_NOTIFICATIONS_READ' })}
-          >
-            Mark All Read
-          </button>
-        )}
-      </div>
-      <div className={styles.notifList}>
-        {state.notifications.length > 0 ? (
-          state.notifications.map(n => (
-            <div 
-              key={n.id} 
-              className={`${styles.notifItem} ${!n.read ? styles.unread : ''}`}
-              onClick={() => {
-                dispatch({ type: 'MARK_NOTIFICATION_READ', payload: n.id });
-                if (n.jobId) navigate(`/jobs/${n.jobId}`);
-                if (n.chatId) navigate(`/chats`);
-                setShowNotifications(false);
-              }}
-            >
-              {!n.read && <div className={styles.unreadIndicator} />}
-              <div className={styles.notifIcon}>
-                {getNotifIcon(n.type)}
-              </div>
-              <div className={styles.notifContent}>
-                <h4 className={styles.notifItemTitle}>{n.title}</h4>
-                <p className={styles.notifMsg}>{n.message}</p>
-                <span className={styles.notifTime}>{formatTime(n.timestamp)}</span>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className={styles.emptyNotif}>
-            <p>The archives are quiet today.</p>
-          </div>
-        )}
-      </div>
-      <div className={styles.notifFooter}>
-        <button className={styles.viewAllNotif}>Clear History</button>
-      </div>
-    </motion.div>
-  );
 
   return (
     <div className={styles.layoutWrapper}>
@@ -246,18 +173,77 @@ const DashboardLayout = ({ children }) => {
                     </motion.div>
                   </AnimatePresence>
                 </button>
-                <div className={styles.notifWrapper} ref={notifRef}>
+                
+                <div className={styles.notifWrapper}>
                   <button 
                     className={styles.notifBtn} 
-                    onClick={() => setShowNotifications(!showNotifications)}
+                    onClick={() => setIsNotifOpen(!isNotifOpen)}
+                    aria-label="View notifications"
                   >
                     <Bell size={20} strokeWidth={1.5} />
-                    {unreadCount > 0 && <span className={styles.notifBadge}>{unreadCount}</span>}
+                    {state.notifications.some(n => !n.read) && <span className={styles.notifBadge} />}
                   </button>
+
                   <AnimatePresence>
-                    {showNotifications && <NotificationPanel />}
+                    {isNotifOpen && (
+                      <>
+                        <div className={styles.panelBackdrop} onClick={() => setIsNotifOpen(false)} />
+                        <motion.div 
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          className={styles.notifPanel}
+                        >
+                          <div className={styles.panelHeader}>
+                            <h3 className={styles.panelTitle}>THE DAILY DISPATCH</h3>
+                            <button 
+                              className={styles.markReadBtn}
+                              onClick={() => dispatch({ type: 'MARK_ALL_NOTIFICATIONS_READ' })}
+                            >
+                              Clear Archives
+                            </button>
+                          </div>
+                          <div className={styles.notifList}>
+                            {state.notifications.length > 0 ? (
+                              state.notifications.map((notif) => (
+                                <div 
+                                  key={notif.id} 
+                                  className={`${styles.notifItem} ${!notif.read ? styles.unread : ''}`}
+                                  onClick={() => {
+                                    dispatch({ type: 'MARK_NOTIFICATION_READ', payload: notif.id });
+                                    if (notif.jobId) navigate(`/job/${notif.jobId}`);
+                                    if (notif.chatId) navigate(`/chats`);
+                                    setIsNotifOpen(false);
+                                  }}
+                                >
+                                  <div className={styles.notifIcon}>
+                                    <Bell size={14} />
+                                  </div>
+                                  <div className={styles.notifContent}>
+                                    <h4 className={styles.notifTitle}>{notif.title}</h4>
+                                    <p className={styles.notifMessage}>{notif.message}</p>
+                                    <span className={styles.notifTime}>
+                                      {new Date(notif.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </span>
+                                  </div>
+                                  {!notif.read && <div className={styles.unreadDot} />}
+                                </div>
+                              ))
+                            ) : (
+                              <div className={styles.emptyNotif}>
+                                <p>No new dispatches at this time.</p>
+                              </div>
+                            )}
+                          </div>
+                          <button className={styles.viewAllNotif} onClick={() => setIsNotifOpen(false)}>
+                            SEE ALL ENTRIES
+                          </button>
+                        </motion.div>
+                      </>
+                    )}
                   </AnimatePresence>
                 </div>
+
                 <div className={styles.userProfile} onClick={() => navigate('/profile')}>
                   <div className={styles.avatar}>
                     {state.currentUser?.name?.[0]?.toUpperCase() || 'U'}
