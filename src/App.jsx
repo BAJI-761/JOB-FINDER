@@ -41,6 +41,10 @@ function AppLayout() {
   const { state } = useApp();
   const showDashboard = state.auth.isAuthenticated && !noNavPaths.includes(location.pathname);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', state.theme);
+  }, [state.theme]);
+
   return (
     <div className="app-container">
       {showDashboard ? (

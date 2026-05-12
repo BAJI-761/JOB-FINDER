@@ -15,7 +15,8 @@ const STORAGE_KEYS = {
   SAVED: 'linkup_saved',
   CHATS: 'linkup_chats',
   NOTIFICATIONS: 'linkup_notifications',
-  COMPANIES: 'linkup_companies'
+  COMPANIES: 'linkup_companies',
+  THEME: 'linkup_theme'
 };
 
 function loadFromStorage(key, fallback) {
@@ -44,6 +45,7 @@ function getInitialState() {
   const chats = loadFromStorage(STORAGE_KEYS.CHATS, defaultChats);
   const notifications = loadFromStorage(STORAGE_KEYS.NOTIFICATIONS, defaultNotifications);
   const companies = loadFromStorage(STORAGE_KEYS.COMPANIES, defaultCompanies);
+  const theme = loadFromStorage(STORAGE_KEYS.THEME, 'light');
 
   let currentUser = null;
   if (auth.isAuthenticated && auth.userId) {
@@ -60,6 +62,7 @@ function getInitialState() {
     chats,
     notifications,
     companies,
+    theme,
     searchQuery: '',
     activeJobFilter: 'See All',
     activeCategory: null,
@@ -70,6 +73,10 @@ function getInitialState() {
 
 function appReducer(state, action) {
   switch (action.type) {
+    // ── Theme ──
+    case 'TOGGLE_THEME':
+      return { ...state, theme: state.theme === 'light' ? 'dark' : 'light' };
+
     // ── Auth ──
     case 'LOGIN': {
       const { email, password } = action.payload;
@@ -322,7 +329,8 @@ export function AppProvider({ children }) {
     saveToStorage(STORAGE_KEYS.CHATS, state.chats);
     saveToStorage(STORAGE_KEYS.NOTIFICATIONS, state.notifications);
     saveToStorage(STORAGE_KEYS.COMPANIES, state.companies);
-  }, [state.auth, state.users, state.jobs, state.applications, state.saved, state.chats, state.notifications, state.companies]);
+    saveToStorage(STORAGE_KEYS.THEME, state.theme);
+  }, [state.auth, state.users, state.jobs, state.applications, state.saved, state.chats, state.notifications, state.companies, state.theme]);
 
   // Auto-remove toasts after 3 seconds
   useEffect(() => {

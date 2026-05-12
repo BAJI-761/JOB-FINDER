@@ -10,7 +10,9 @@ import {
   Search, 
   Bell,
   Menu,
-  X
+  X,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import styles from './DashboardLayout.module.css';
@@ -168,6 +170,23 @@ const DashboardLayout = ({ children }) => {
                 <input type="text" placeholder="Search the archives..." className={styles.searchInput} />
               </div>
               <div className={styles.utilityActions}>
+                <button 
+                  className={styles.themeToggle} 
+                  onClick={() => dispatch({ type: 'TOGGLE_THEME' })}
+                  title={`Switch to ${state.theme === 'light' ? 'Dark' : 'Light'} Mode`}
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={state.theme}
+                      initial={{ y: 10, opacity: 0, rotate: -90 }}
+                      animate={{ y: 0, opacity: 1, rotate: 0 }}
+                      exit={{ y: -10, opacity: 0, rotate: 90 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {state.theme === 'light' ? <Moon size={20} strokeWidth={1.5} /> : <Sun size={20} strokeWidth={1.5} />}
+                    </motion.div>
+                  </AnimatePresence>
+                </button>
                 <button className={styles.notifBtn}>
                   <Bell size={20} strokeWidth={1.5} />
                   <span className={styles.notifBadge} />
