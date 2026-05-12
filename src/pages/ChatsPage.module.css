@@ -1,0 +1,154 @@
+.chatsContainer {
+  padding: var(--page-padding);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: var(--font-display-family);
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 3px double var(--border);
+  padding-bottom: 12px;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 0 16px;
+  height: 50px;
+  margin-bottom: 32px;
+  transition: box-shadow 200ms ease;
+}
+
+.searchBox:focus-within {
+  box-shadow: 4px 4px 0px 0px var(--accent);
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.chatList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+}
+
+.chatItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  cursor: pointer;
+  background: var(--bg-page);
+  border-bottom: 1px solid var(--border-light);
+  transition: all 150ms ease;
+}
+
+.chatItem:last-child {
+  border-bottom: none;
+}
+
+.chatItem:hover {
+  background: var(--bg-card-hover);
+  padding-left: 24px;
+}
+
+.avatarWrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 54px;
+  height: 54px;
+  background: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-family: var(--font-display-family);
+  font-weight: 700;
+  font-size: 20px;
+  border: 1px solid var(--border);
+}
+
+.onlineBadge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  background: #22C55E;
+  border: 2px solid var(--bg-page);
+}
+
+.chatInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.participantName {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.lastMessageRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lastMessage {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80%;
+}
+
+.unreadBadge {
+  min-width: 20px;
+  height: 20px;
+  background: var(--accent);
+  color: white;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
