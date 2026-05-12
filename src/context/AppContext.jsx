@@ -39,7 +39,12 @@ function saveToStorage(key, data) {
 function getInitialState() {
   const auth = loadFromStorage(STORAGE_KEYS.AUTH, { isAuthenticated: false, userId: null, role: null, token: null });
   const users = loadFromStorage(STORAGE_KEYS.USERS, defaultUsers);
-  const jobs = loadFromStorage(STORAGE_KEYS.JOBS, defaultJobs);
+  const storedJobs = loadFromStorage(STORAGE_KEYS.JOBS, defaultJobs);
+  // Ensure 'featured' status from defaultJobs is reflected even if we have stored data
+  const jobs = storedJobs.map(sj => {
+    const dj = defaultJobs.find(d => d.id === sj.id);
+    return dj ? { ...sj, featured: dj.featured } : sj;
+  });
   const applications = loadFromStorage(STORAGE_KEYS.APPLICATIONS, []);
   const saved = loadFromStorage(STORAGE_KEYS.SAVED, {});
   const chats = loadFromStorage(STORAGE_KEYS.CHATS, defaultChats);
