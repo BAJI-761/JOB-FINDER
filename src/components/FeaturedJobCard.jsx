@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import BookmarkButton from './BookmarkButton';
 import styles from './FeaturedJobCard.module.css';
 import gsap from 'gsap';
+import { formatSalary } from '../data/jobs';
 
 export default function FeaturedJobCard({ job }) {
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ export default function FeaturedJobCard({ job }) {
 
       <div className={styles.footer}>
         <div className={styles.salary}>
-          ${job.salaryMin?.toLocaleString()} — ${job.salaryMax?.toLocaleString()}
+          {formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency, job.salaryPeriod)}
         </div>
         <div className={styles.bookmark} onClick={(e) => e.stopPropagation()}>
           <BookmarkButton jobId={job.id} />
@@ -96,4 +97,3 @@ export default function FeaturedJobCard({ job }) {
     </motion.div>
   );
 }
-

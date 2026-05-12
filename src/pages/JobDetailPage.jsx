@@ -6,6 +6,7 @@ import BookmarkButton from '../components/BookmarkButton';
 import Modal from '../components/Modal';
 import PageTransition from '../components/PageTransition';
 import styles from './JobDetailPage.module.css';
+import { formatSalary } from '../data/jobs';
 
 export default function JobDetailPage() {
   const { id } = useParams();
@@ -66,7 +67,7 @@ export default function JobDetailPage() {
             </div>
             <div className={styles.stat}>
               <span className={styles.statLabel}>COMPENSATION</span>
-              <span className={styles.statValue}>${job.salaryMin?.toLocaleString()} — ${job.salaryMax?.toLocaleString()}</span>
+              <span className={styles.statValue}>{formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency, job.salaryPeriod)}</span>
             </div>
             <div className={styles.stat}>
               <span className={styles.statLabel}>WORK STYLE</span>

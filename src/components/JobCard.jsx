@@ -6,6 +6,7 @@ import BookmarkButton from './BookmarkButton';
 import styles from './JobCard.module.css';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
+import { formatSalary } from '../data/jobs';
 
 export default function JobCard({ job, index = 0 }) {
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ export default function JobCard({ job, index = 0 }) {
             <span>{job.location}</span>
           </div>
           <div className={styles.detailItem}>
-            <span className={styles.mono}>${job.salaryMin?.toLocaleString()} — ${job.salaryMax?.toLocaleString()}</span>
+            <span className={styles.mono}>{formatSalary(job.salaryMin, job.salaryMax, job.salaryCurrency, job.salaryPeriod)}</span>
           </div>
         </div>
         <div ref={iconRef} className={styles.action}>
@@ -108,4 +109,3 @@ export default function JobCard({ job, index = 0 }) {
     </motion.div>
   );
 }
-

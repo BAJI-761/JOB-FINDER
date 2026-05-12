@@ -513,14 +513,25 @@ export const defaultJobs = [
   }
 ];
 
-export const formatSalary = (min, max, currency = 'INR') => {
-  const formatNum = (n) => {
-    if (n >= 100000) return `${(n / 100000).toFixed(n % 100000 === 0 ? 0 : 2)}L`;
-    if (n >= 1000) return `${(n / 1000).toFixed(0)}K`;
-    return n.toString();
+export const formatSalary = (min, max, currency = 'INR', period = 'Year') => {
+  const formatter = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  });
+
+  const formatLPA = (n) => {
+    if (n >= 100000) {
+      return `₹${(n / 100000).toFixed(1)}L`;
+    }
+    return formatter.format(n);
   };
-  const symbol = currency === 'INR' ? '₹' : '$';
-  return `${symbol}${min.toLocaleString('en-IN')} - ${symbol}${max.toLocaleString('en-IN')}`;
+
+  if (period === 'Year') {
+    return `${formatLPA(min)} — ${formatLPA(max)}PA`;
+  }
+  
+  return `${formatter.format(min)} — ${formatter.format(max)} /mo`;
 };
 
 export const jobCategories = [
