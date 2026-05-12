@@ -82,7 +82,7 @@ export const defaultJobs = [
     tags: ["Full-time", "On-Site"],
     applicants: 8,
     saved: true,
-    featured: false,
+    featured: true,
     description: "Apple is looking for a Senior UI/UX Designer to define the next generation of human interface design on all Apple platforms. You'll craft experiences that are intuitive, beautiful, and push the boundaries of what's possible. Working alongside world-class engineers and designers, you'll shape products that impact billions of users daily.",
     requirements: [
       "5+ years of professional design experience",
@@ -146,7 +146,7 @@ export const defaultJobs = [
     tags: ["Full-time", "Remote"],
     applicants: 31,
     saved: false,
-    featured: false,
+    featured: true,
     description: "Meta is seeking a Product Designer to help build the future of social connection. You'll design experiences for products used by billions, including Facebook, Instagram, and WhatsApp. This role requires a deep understanding of human behavior and the ability to translate complex problems into elegant solutions.",
     requirements: [
       "3+ years of product design experience",
@@ -210,7 +210,7 @@ export const defaultJobs = [
     tags: ["Full-time", "Hybrid"],
     applicants: 16,
     saved: false,
-    featured: false,
+    featured: true,
     description: "Swiggy is looking for a Backend Engineer to design and implement scalable microservices that power India's largest food delivery platform. You'll work on systems handling millions of orders daily, focusing on reliability, performance, and data consistency.",
     requirements: [
       "Strong proficiency in Java, Go, or Python",
@@ -274,7 +274,7 @@ export const defaultJobs = [
     tags: ["Full-time", "On-Site"],
     applicants: 9,
     saved: false,
-    featured: false,
+    featured: true,
     description: "Join Razorpay's infrastructure team to build and maintain the CI/CD pipelines, monitoring systems, and cloud infrastructure that powers India's leading payments platform. You'll ensure 99.99% uptime for services processing billions in transactions.",
     requirements: [
       "Experience with AWS, GCP, or Azure cloud services",
@@ -338,7 +338,7 @@ export const defaultJobs = [
     tags: ["Full-time", "Hybrid"],
     applicants: 28,
     saved: false,
-    featured: false,
+    featured: true,
     description: "Google is hiring Full Stack Developers to build internal tools and customer-facing applications. You'll work with Angular, Node.js, and Google Cloud to create solutions that improve developer productivity across the organization.",
     requirements: [
       "3+ years of full stack development experience",
@@ -531,7 +531,7 @@ export const formatSalary = (min, max, currency = 'INR', period = 'Year') => {
     return `${formatLPA(min)} — ${formatLPA(max)}PA`;
   }
   
-  return `${formatter.format(min)} — ${formatter.format(max)} /mo`;
+  return `${formatter.format(min)} — ${formatter.format(max)} /monthly`;
 };
 
 export const jobCategories = [

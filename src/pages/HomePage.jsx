@@ -36,7 +36,7 @@ export default function HomePage() {
   const { state, dispatch, getFilteredJobs } = useApp();
   const navigate = useNavigate();
   const jobs = getFilteredJobs();
-  const featured = jobs.filter(j => j.featured).slice(0, 3);
+  const featured = jobs.filter(j => j.featured).slice(0, 6);
   const latest = jobs.slice(0, 10);
   
   const pageRef = useRef();
