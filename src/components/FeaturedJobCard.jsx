@@ -7,7 +7,10 @@ import styles from './FeaturedJobCard.module.css';
 import gsap from 'gsap';
 import { formatSalary } from '../data/jobs';
 
+import { useApp } from '../context/AppContext';
+
 export default function FeaturedJobCard({ job }) {
+  const { state } = useApp();
   const navigate = useNavigate();
   const cardRef = useRef(null);
   const actionRef = useRef(null);
