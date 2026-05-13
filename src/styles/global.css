@@ -480,3 +480,45 @@ a:focus:not(:focus-visible) {
   cursor: pointer;
 }
 
+/* ── Mobile Overrides (Android / Small screens) ── */
+@media (max-width: 768px) {
+  .btn-primary {
+    height: 48px;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+  }
+  .btn-secondary,
+  .btn-outline {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+  .form-input {
+    height: 44px;
+    font-size: 16px; /* Prevents iOS zoom on focus */
+    padding: 6px 12px;
+  }
+  .form-textarea {
+    min-height: 80px;
+    padding: 10px 12px;
+  }
+  .form-select {
+    height: 42px;
+  }
+  .empty-state {
+    padding: 32px 16px;
+  }
+  .empty-state-icon {
+    width: 60px;
+    height: 60px;
+  }
+  .drop-cap::first-letter {
+    font-size: 3.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-primary {
+    height: 44px;
+    font-size: 13px;
+  }
+}

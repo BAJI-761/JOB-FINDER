@@ -202,6 +202,47 @@
   .intelGrid {
     grid-template-columns: 1fr 1fr;
   }
+  .newsList {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .masthead {
+    margin-bottom: 30px;
+    padding-bottom: 16px;
+  }
+  .mainTitle {
+    font-size: clamp(28px, 6vw, 48px);
+  }
+  .spotlightGrid {
+    flex-direction: column;
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+  .spotlightSection {
+    margin-bottom: 40px;
+  }
+  .loadMore {
+    padding: 20px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .intelGrid {
+    grid-template-columns: 1fr;
+  }
+  .intelValue {
+    font-size: 32px;
+  }
+  .tickerGroup {
+    gap: 16px;
+    padding-right: 16px;
+    font-size: 10px;
+  }
+  .tickerContainer {
+    margin-bottom: 20px;
+  }
 }
 
 @media (max-width: 1200px) {

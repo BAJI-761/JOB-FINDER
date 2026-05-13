@@ -196,3 +196,25 @@
     display: none;
   }
 }
+
+/* ── Small Phone Screens ── */
+@media (max-width: 480px) {
+  .topNav {
+    height: 56px;
+  }
+  .logoText {
+    font-size: 22px;
+  }
+  .searchBtn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  .avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+  .container {
+    padding: 0 12px;
+  }
+}

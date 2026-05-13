@@ -154,17 +154,40 @@
 }
 
 @media (max-width: 768px) {
+  .setupPageWrapper {
+    padding: 0;
+    align-items: stretch;
+  }
   .setupContentGrid {
     flex-direction: column;
-    height: auto;
-    max-height: 90vh;
+    height: 100%;
+    max-height: none;
     overflow-y: auto;
+    border: none;
   }
   .visualPanel {
     display: none;
   }
   .formInner {
-    padding: 30px;
+    padding: 24px 20px;
+  }
+  .formTitle {
+    font-size: 24px;
+  }
+  .formSubtitle {
+    font-size: 14px;
+  }
+  .formHeader {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .formInner {
+    padding: 20px 16px;
+  }
+  .formTitle {
+    font-size: 22px;
   }
 }
 

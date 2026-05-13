@@ -435,3 +435,49 @@
     width: auto;
   }
 }
+
+@media (max-width: 768px) {
+  .contentGrid {
+    padding: 16px;
+    gap: 24px;
+  }
+  .topUtilities {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .searchBar {
+    padding: 10px 14px;
+  }
+  .searchInput {
+    font-size: 14px;
+  }
+  .utilityActions {
+    justify-content: flex-end;
+    gap: 16px;
+  }
+  .brand {
+    font-size: 32px;
+  }
+  .mobileHeader {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contentGrid {
+    padding: 12px;
+    gap: 20px;
+  }
+  .topUtilities {
+    padding-bottom: 16px;
+  }
+  .brand {
+    font-size: 28px;
+  }
+  .notifPanel {
+    left: 4px;
+    right: 4px;
+    max-height: 70vh;
+  }
+}

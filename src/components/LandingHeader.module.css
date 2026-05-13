@@ -223,4 +223,36 @@
   .header {
     padding: 20px 0;
   }
+
+  .getStartedBtn {
+    display: inline-flex;
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+
+  .authActions {
+    gap: 12px;
+  }
+
+  .themeToggle {
+    width: 36px;
+    height: 36px;
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 20px;
+  }
+  .getStartedBtn {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+  .header {
+    padding: 14px 0;
+  }
+  .container {
+    padding: 0 12px;
+  }
 }

@@ -111,3 +111,19 @@
   opacity: 1;
   color: var(--accent);
 }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .spotlightCard {
+    min-width: unset;
+    width: 100%;
+    padding: 24px;
+    gap: 20px;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .companyRow {
+    font-size: 13px;
+  }
+}

@@ -183,3 +183,41 @@
   box-shadow: 4px 4px 0px 0px var(--border);
   transform: translate(-2px, -2px);
 }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .chatContainer {
+    height: calc(100vh - 60px);
+  }
+  .messageList {
+    padding: 12px;
+  }
+  .bubble {
+    max-width: 85%;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+  .header {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  .avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
+  .participantName {
+    font-size: 14px;
+  }
+  .inputArea {
+    padding: 12px 16px;
+  }
+  .messageInput {
+    height: 42px;
+    font-size: 14px;
+  }
+  .sendBtn {
+    width: 42px;
+    height: 42px;
+  }
+}

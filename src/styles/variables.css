@@ -117,3 +117,28 @@
   --trusted-green: #22C55E;
   --trusted-green-light: rgba(34, 197, 94, 0.1);
 }
+
+/* ── Mobile Overrides (Android / Small screens) ── */
+@media (max-width: 768px) {
+  :root {
+    --font-display-size: clamp(36px, 10vw, 60px);
+    --font-heading-size: 28px;
+    --font-subheading-size: 22px;
+    --font-body-size: 16px;
+    --font-small-size: 14px;
+    --page-padding: 16px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    --spacing-lg: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --font-heading-size: 24px;
+    --font-body-size: 15px;
+    --page-padding: 12px;
+    --spacing-xl: 24px;
+    --spacing-2xl: 32px;
+  }
+}

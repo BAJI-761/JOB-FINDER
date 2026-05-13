@@ -23,6 +23,42 @@ const AuthLayout = ({ children, image, title, subtitle, sidebarTitle, sidebarSub
       position: 'relative',
       overflow: 'hidden'
     }}>
+      {/* Mobile Responsive Overrides */}
+      <style>{`
+        @media (max-width: 768px) {
+          .auth-page-wrapper {
+            padding: 0 !important;
+            align-items: stretch !important;
+            height: 100vh !important;
+          }
+          .auth-content-box {
+            max-width: 100% !important;
+            height: 100% !important;
+            flex-direction: column !important;
+            border: none !important;
+          }
+          .auth-visual-panel {
+            display: none !important;
+          }
+          .auth-form-panel {
+            flex: 1 !important;
+            padding: 32px 24px !important;
+            overflow-y: auto !important;
+            justify-content: flex-start !important;
+            padding-top: 48px !important;
+          }
+          .auth-form-panel h1 {
+            font-size: 26px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .auth-form-panel {
+            padding: 24px 16px !important;
+            padding-top: 40px !important;
+          }
+        }
+      `}</style>
+
       {/* Background Grain Effect */}
       <div style={{
         position: 'absolute',
@@ -33,6 +69,7 @@ const AuthLayout = ({ children, image, title, subtitle, sidebarTitle, sidebarSub
       }} />
 
       <motion.div
+        className="auth-content-box"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -50,7 +87,7 @@ const AuthLayout = ({ children, image, title, subtitle, sidebarTitle, sidebarSub
         }}
       >
         {/* Left Visual Panel */}
-        <div style={{
+        <div className="auth-visual-panel" style={{
           flex: '1.2', // Restored flex
           position: 'relative',
           overflow: 'hidden',
@@ -139,7 +176,7 @@ const AuthLayout = ({ children, image, title, subtitle, sidebarTitle, sidebarSub
         </div>
 
         {/* Right Form Panel */}
-        <div style={{
+        <div className="auth-form-panel" style={{
           flex: '1',
           padding: '24px 60px', 
           display: 'flex',
@@ -184,4 +221,3 @@ const AuthLayout = ({ children, image, title, subtitle, sidebarTitle, sidebarSub
 };
 
 export default AuthLayout;
-;

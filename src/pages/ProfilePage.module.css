@@ -144,6 +144,53 @@
   }
 }
 
+@media (max-width: 768px) {
+  .headerMain {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .name {
+    font-size: 32px;
+  }
+  .photo {
+    width: 80px;
+    height: 80px;
+    font-size: 36px;
+  }
+  .headline {
+    font-size: 16px;
+  }
+  .stats {
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .statItem {
+    align-items: flex-start;
+  }
+  .statValue {
+    font-size: 24px;
+  }
+  .timelineItem {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .bio {
+    font-size: 16px;
+  }
+  .profileLayout {
+    gap: 32px;
+  }
+  .header {
+    padding-bottom: 24px;
+    gap: 24px;
+  }
+  .sideSection {
+    padding: 20px;
+  }
+}
+
 .dossier {
   display: flex;
   flex-direction: column;

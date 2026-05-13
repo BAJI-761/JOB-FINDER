@@ -46,6 +46,7 @@ export default function SplashPage() {
       <motion.div 
         id="about"
         ref={containerRef} 
+        className="splash-hero-grid"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -66,6 +67,84 @@ export default function SplashPage() {
             @media (min-width: 1024px) {
               .lg-span-8 { grid-column: span 8 !important; border-right: 1px solid var(--border-light); padding-right: 60px; }
               .lg-span-4 { grid-column: span 4 !important; }
+              .lg-span-5 { grid-column: span 5 !important; }
+              .lg-span-7 { grid-column: span 7 !important; }
+            }
+            /* ── Mobile Overrides for SplashPage ── */
+            @media (max-width: 768px) {
+              .splash-hero-grid {
+                padding: 100px 16px 48px !important;
+                gap: 32px !important;
+                grid-template-columns: 1fr !important;
+              }
+              .splash-hero-grid h1 {
+                font-size: clamp(32px, 8vw, 56px) !important;
+              }
+              .splash-features-grid {
+                grid-template-columns: 1fr !important;
+              }
+              .splash-testimonials-grid {
+                grid-template-columns: 1fr !important;
+              }
+              .splash-footer-grid {
+                grid-template-columns: 1fr !important;
+                gap: 32px !important;
+              }
+              .splash-footer-links {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 24px !important;
+              }
+              .splash-footer-bottom {
+                flex-direction: column !important;
+                gap: 16px !important;
+                text-align: center !important;
+              }
+              .splash-product-grid {
+                grid-template-columns: 1fr !important;
+              }
+              .splash-product-visual {
+                height: 300px !important;
+              }
+              .splash-testimonial-inner {
+                grid-template-columns: 1fr !important;
+              }
+              .splash-cta-row {
+                flex-direction: column !important;
+                width: 100% !important;
+              }
+              .splash-cta-row .btn-primary,
+              .splash-cta-row .btn-outline {
+                width: 100% !important;
+              }
+              .splash-section-padding {
+                padding: 60px 0 !important;
+              }
+              .splash-footer-section {
+                padding: 48px 0 24px !important;
+              }
+              .feature-card {
+                padding: 28px !important;
+              }
+              .brand-item {
+                font-size: 18px !important;
+                padding: 0 24px !important;
+              }
+            }
+            @media (max-width: 480px) {
+              .splash-hero-grid {
+                padding: 80px 12px 32px !important;
+                gap: 24px !important;
+              }
+              .splash-hero-grid h1 {
+                font-size: clamp(28px, 8vw, 42px) !important;
+                line-height: 0.9 !important;
+              }
+              .splash-footer-links {
+                grid-template-columns: 1fr !important;
+              }
+              .feature-card {
+                padding: 20px !important;
+              }
             }
           `}</style>
           
@@ -94,7 +173,7 @@ export default function SplashPage() {
             inkUp brings professionals together with powerful tools designed to streamline hiring, boost careers, and drive industry connections. Join thousands of teams already leveraging our platform.
           </motion.div>
 
-          <motion.div variants={itemVariants} style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <motion.div variants={itemVariants} className="splash-cta-row" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
             <MagneticButton onClick={() => navigate('/onboarding')} className="btn-primary" style={{ width: 'auto' }}>
               <span style={{ padding: '0 48px', height: '64px', display: 'flex', alignItems: 'center' }}>GET STARTED</span>
             </MagneticButton>
@@ -271,7 +350,7 @@ export default function SplashPage() {
         style={{ padding: '120px 0', background: 'var(--bg-page)', overflow: 'hidden' }}
       >
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 var(--page-padding)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '60px', alignItems: 'center' }}>
+          <div className="splash-product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '60px', alignItems: 'center' }}>
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -307,7 +386,7 @@ export default function SplashPage() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1 }}
-              style={{ gridColumn: 'span 12', position: 'relative', height: '600px' }} className="lg-span-7"
+              style={{ gridColumn: 'span 12', position: 'relative', height: '600px' }} className="lg-span-7 splash-product-visual"
             >
               {/* Layered UI Visuals */}
               <motion.div 
@@ -386,7 +465,7 @@ export default function SplashPage() {
             <h3 style={{ fontSize: '48px', fontWeight: 900, fontFamily: 'var(--font-display-family)', textTransform: 'uppercase' }}>Built for Scale</h3>
           </motion.div>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0' }}>
+          <div className="splash-features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0' }}>
             {[
               { title: 'AI Networking', desc: 'Predictive algorithms that connect you with your next major breakthrough.' },
               { title: 'Smart Hiring', desc: 'Recruitment tools that prioritize quality and cultural synergy.' },
@@ -431,14 +510,14 @@ export default function SplashPage() {
         style={{ padding: '120px 0', background: 'var(--bg-page)', borderTop: '1px solid var(--border-light)' }}
       >
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 var(--page-padding)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '60px' }}>
+          <div className="splash-testimonials-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '60px' }}>
             <div style={{ gridColumn: 'span 12' }} className="lg-span-4">
                <h2 style={{ fontSize: '14px', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--text-muted)', marginBottom: '16px' }}>Voices of Authority</h2>
                <h3 style={{ fontSize: '48px', fontWeight: 900, fontFamily: 'var(--font-display-family)', textTransform: 'uppercase', lineHeight: 1 }}>What Industry Leaders Say</h3>
             </div>
             
             <div style={{ gridColumn: 'span 12' }} className="lg-span-8">
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '40px' }}>
+              <div className="splash-testimonial-inner" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '40px' }}>
                 {[
                   { quote: "LinkUp has completely transformed our executive search process. The precision of their AI matching is unparalleled in the market.", author: "Sarah Jenkins", role: "VP of Talent, Google" },
                   { quote: "An editorial masterpiece of a platform. It feels as high-end as the professionals it serves.", author: "Marcus Thorne", role: "Creative Director, Adobe" },
@@ -475,9 +554,9 @@ export default function SplashPage() {
       </motion.section>
 
       {/* Phase 2: Footer */}
-      <footer id="footer" style={{ padding: '100px 0 40px', background: 'var(--bg-page)', borderTop: '2px solid var(--border)' }}>
+      <footer id="footer" className="splash-footer-section" style={{ padding: '100px 0 40px', background: 'var(--bg-page)', borderTop: '2px solid var(--border)' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 var(--page-padding)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '60px', marginBottom: '100px' }}>
+          <div className="splash-footer-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '60px', marginBottom: '100px' }}>
             <div style={{ gridColumn: 'span 12' }} className="lg-span-4">
               <div style={{ fontSize: '24px', fontWeight: 900, fontFamily: 'var(--font-display-family)', marginBottom: '24px', color: 'var(--text-primary)' }}>LINKUP<span style={{ color: 'var(--accent)' }}>.</span></div>
               <p style={{ fontSize: '14px', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '300px' }}>
@@ -486,7 +565,7 @@ export default function SplashPage() {
             </div>
             
             <div style={{ gridColumn: 'span 12' }} className="lg-span-8">
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px' }}>
+              <div className="splash-footer-links" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px' }}>
                 <div>
                   <h5 style={{ fontSize: '12px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '24px', color: 'var(--text-primary)' }}>Product</h5>
                   <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '14px', color: 'var(--text-secondary)' }}>
@@ -518,7 +597,7 @@ export default function SplashPage() {
             </div>
           </div>
           
-          <div style={{ 
+          <div className="splash-footer-bottom" style={{ 
             borderTop: '1px solid var(--border-light)', 
             paddingTop: '40px', 
             display: 'flex', 

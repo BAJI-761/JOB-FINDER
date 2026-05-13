@@ -161,11 +161,48 @@
     flex-direction: column;
   }
   .keyStats {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
   .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .jobTitle {
+    font-size: clamp(24px, 6vw, 40px);
+  }
+  .actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+  .applyBtn {
+    width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+  }
+  .header {
+    padding-bottom: 24px;
+    gap: 24px;
+  }
+  .description {
+    font-size: 16px;
+  }
+  .breadcrumb {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .keyStats {
+    grid-template-columns: 1fr;
+  }
+  .requirementsList {
+    grid-template-columns: 1fr;
+  }
+  .companyDossier {
+    padding: 20px;
   }
 }
 

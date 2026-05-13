@@ -159,3 +159,20 @@
 .editorialCard:hover .action {
   opacity: 1;
 }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .editorialCard {
+    padding: 16px;
+    gap: 12px;
+  }
+  .title {
+    font-size: 18px;
+  }
+  .company {
+    font-size: 13px;
+  }
+  .footer {
+    padding-top: 12px;
+  }
+}
