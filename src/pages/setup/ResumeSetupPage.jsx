@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Upload, FileText, CheckCircle } from 'lucide-react';
+import { Upload, FileText, CheckCircle, ArrowLeft, Zap } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import PageTransition from '../../components/PageTransition';
+import SetupLayout from '../../components/SetupLayout';
+import styles from './Setup.module.css';
+
+import { PROFESSIONAL_ASSETS } from '../../data/OnboardingAssets';
 
 export default function ResumeSetupPage() {
   const { dispatch } = useApp();
@@ -12,41 +16,85 @@ export default function ResumeSetupPage() {
 
   const handleFile = (e) => {
     const file = e.target.files?.[0];
-    if (file) { setFileName(file.name); dispatch({ type: 'UPDATE_PROFILE', payload: { resume: file.name } }); }
+    if (file) { 
+      setFileName(file.name); 
+      dispatch({ type: 'UPDATE_PROFILE', payload: { resume: file.name } }); 
+    }
   };
 
-  const handleComplete = () => { setDone(true); setTimeout(() => navigate('/home', { replace: true }), 1500); };
+  const handleComplete = () => { 
+    setDone(true); 
+    setTimeout(() => navigate('/home', { replace: true }), 2000); 
+  };
 
   if (done) return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-page)' }}>
-      <div className="scale-in" style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--trusted-green-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
-        <CheckCircle size={40} color="var(--trusted-green)" />
+    <PageTransition variant="newsprint">
+      <div className={styles.setupPageWrapper} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+        <div className={styles.grainOverlay} />
+        <div style={{ position: 'relative', zIndex: 2 }}>
+          <div style={{ width: 80, height: 80, background: 'var(--primary)', color: 'var(--bg-page)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+            <CheckCircle size={40} />
+          </div>
+          <h2 className={styles.formTitle} style={{ marginBottom: '8px' }}>Authority Established</h2>
+          <p className={styles.formSubtitle}>Your credentials have been indexed in the global network archives.</p>
+          <div style={{ marginTop: '40px', fontFamily: 'var(--font-mono)', fontSize: '11px', textTransform: 'uppercase', color: 'var(--text-muted)', letterSpacing: '2px' }}>
+            Redirecting to Front Page...
+          </div>
+        </div>
       </div>
-      <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>All Set! 🎉</h2>
-      <p style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Redirecting to home...</p>
-    </div>
+    </PageTransition>
   );
 
   return (
-    <PageTransition>
-      <div style={{ minHeight: '100vh', padding: '24px var(--page-padding)', background: 'var(--bg-page)' }}>
-        <div style={{ height: 6, borderRadius: 3, background: 'var(--border)', marginBottom: 24, overflow: 'hidden' }}>
-          <div style={{ height: '100%', width: '100%', background: 'var(--trusted-green)', borderRadius: 3, animation: 'progressFill 500ms ease-out' }} />
-        </div>
-        <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Upload Resume</h2>
-        <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 24 }}>Step 3 of 3 — Almost done!</p>
-        <label style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 40, border: '2px dashed var(--border)', borderRadius: 16, background: '#fff', cursor: 'pointer', transition: 'all 200ms ease' }}>
+    <PageTransition variant="newsprint">
+      <SetupLayout
+        step={3}
+        totalSteps={3}
+        image={PROFESSIONAL_ASSETS.RESUME}
+        title="Dispatch Credentials"
+        subtitle="Upload your professional resume to the network's high-authority database."
+        sidebarTitle="Final Dispatch"
+        sidebarSubtitle="Commit your credentials to the network's high-authority database."
+      >
+        <label className={styles.uploadZone} style={{ marginTop: '20px', minHeight: '240px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <input type="file" accept=".pdf" onChange={handleFile} style={{ display: 'none' }} />
-          {fileName ? <FileText size={40} color="var(--primary)" /> : <Upload size={40} color="var(--text-muted)" />}
-          <span style={{ marginTop: 12, fontSize: 14, fontWeight: 600, color: fileName ? 'var(--primary)' : 'var(--text-secondary)' }}>{fileName || 'Drag & drop or click to upload'}</span>
-          <span style={{ marginTop: 4, fontSize: 11, color: 'var(--text-muted)' }}>PDF only, max 5MB</span>
+          <div style={{ marginBottom: '20px' }}>
+            {fileName ? <FileText size={56} color="var(--primary)" /> : <Upload size={56} color="var(--text-muted)" />}
+          </div>
+          <span style={{ 
+            display: 'block', 
+            fontFamily: 'var(--font-mono)', 
+            fontSize: '12px', 
+            fontWeight: 700, 
+            textTransform: 'uppercase',
+            letterSpacing: '1px',
+            color: fileName ? 'var(--primary)' : 'var(--text-secondary)' 
+          }}>
+            {fileName || 'Transmit PDF / Document'}
+          </span>
+          <span style={{ marginTop: '12px', display: 'block', fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-sans)' }}>
+            High-Resolution PDF (Max 5MB)
+          </span>
         </label>
-        <div style={{ display: 'flex', gap: 12, marginTop: 32 }}>
-          <button className="btn-outline" onClick={() => navigate(-1)} style={{ flex: 1 }}>← Back</button>
-          <button className="btn-primary" onClick={handleComplete} style={{ flex: 2, height: 48 }}>Complete Setup ✅</button>
+
+        <div className={styles.footer} style={{ marginTop: '60px' }}>
+          <button className={styles.btnOutline} onClick={() => navigate(-1)} style={{ padding: '12px 24px', fontFamily: 'var(--font-mono)', fontSize: '11px', textTransform: 'uppercase', border: '1px solid var(--border)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <ArrowLeft size={16} />
+            Archive Back
+          </button>
+          <button className={styles.dispatchBtn} onClick={handleComplete}>
+            Complete Onboarding
+            <Zap size={16} />
+          </button>
         </div>
-        <button onClick={() => navigate('/home', { replace: true })} style={{ width: '100%', marginTop: 16, fontSize: 13, color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer' }}>Skip for now</button>
-      </div>
+
+        <button 
+          onClick={() => navigate('/home', { replace: true })} 
+          style={{ width: '100%', marginTop: '32px', fontSize: '11px', color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '1px' }}
+        >
+          Skip Dispatch for Now
+        </button>
+      </SetupLayout>
     </PageTransition>
   );
 }

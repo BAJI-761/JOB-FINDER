@@ -3,22 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import Spline from '@splinetool/react-spline';
 import { motion, AnimatePresence } from 'framer-motion';
 import ErrorBoundary from '../components/ErrorBoundary';
+import { ArrowRight, Zap, TrendingUp, Globe } from 'lucide-react';
 
 const slides = [
   { 
-    title: 'Find Your Dream Job', 
-    desc: 'Browse thousands of opportunities from top companies worldwide.',
-    icon: '🔍'
+    title: 'Source Industry Authority', 
+    desc: 'Access a curated network of professionals whose expertise is indexed for impact.',
+    icon: <Globe size={48} />
   },
   { 
-    title: 'Easy Application', 
-    desc: 'Apply with one tap and track your applications in real-time.',
-    icon: '⚡'
+    title: 'Dispatch with Precision', 
+    desc: 'Launch high-authority job postings directly to the network\'s elite talent pool.',
+    icon: <Zap size={48} />
   },
   { 
-    title: 'Grow Your Career', 
-    desc: 'Connect with employers, get interviews, and land your perfect role.',
-    icon: '📈'
+    title: 'Archive Your Success', 
+    desc: 'Track recruitment intelligence and career growth through our editorial dashboard.',
+    icon: <TrendingUp size={48} />
   }
 ];
 
@@ -38,30 +39,31 @@ export default function OnboardingPage() {
 
   return (
     <div style={{ 
-      minHeight: '100vh', 
+      height: '100vh', 
       background: 'var(--bg-page)', 
       display: 'flex', 
       flexDirection: 'column', 
       alignItems: 'center', 
       justifyContent: 'center', 
-      padding: 'var(--spacing-xl)',
-      textAlign: 'center'
+      padding: '24px',
+      textAlign: 'center',
+      overflow: 'hidden'
     }}>
       <div style={{ 
         width: '100%', 
-        maxWidth: 400,
-        height: 300, 
-        marginBottom: 'var(--spacing-xl)', 
+        maxWidth: 500,
+        height: 350, 
+        marginBottom: '40px', 
         position: 'relative',
-        borderRadius: 'var(--radius-lg)',
+        borderRadius: 0,
         overflow: 'hidden',
+        border: '1px solid var(--border)',
         background: 'var(--bg-card)',
-        boxShadow: 'var(--shadow-card)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
       }}>
-        <ErrorBoundary fallback={<div style={{ fontSize: 80 }}>{slides[current].icon}</div>}>
+        <ErrorBoundary fallback={<div style={{ color: 'var(--primary)' }}>{slides[current].icon}</div>}>
           {!hasError ? (
             <Spline 
               scene="https://prod.spline.design/q-9r8OIf46I4E6k5/scene.splinecode" 
@@ -73,13 +75,13 @@ export default function OnboardingPage() {
               }}
             />
           ) : (
-            <div style={{ fontSize: 80 }}>{slides[current].icon}</div>
+            <div style={{ color: 'var(--primary)' }}>{slides[current].icon}</div>
           )}
         </ErrorBoundary>
         
         {isLoading && !hasError && (
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-card)' }}>
-             <div className="spinner" style={{ width: 40, height: 40, border: '4px solid var(--primary-light)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+             <div className="spinner" style={{ width: 40, height: 40, border: '1px solid var(--border)', borderTopColor: 'var(--primary)', borderRadius: 0, animation: 'spin 1s linear infinite' }} />
           </div>
         )}
       </div>
@@ -87,69 +89,90 @@ export default function OnboardingPage() {
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.3 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.5, ease: "circOut" }}
+          style={{ maxWidth: 450 }}
         >
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--text-muted)', display: 'block', marginBottom: '12px' }}>
+            Edition {current + 1}
+          </span>
           <h2 style={{ 
-            fontSize: 'var(--font-display-size)', 
-            fontWeight: 'var(--font-display-weight)', 
-            marginBottom: 'var(--spacing-md)', 
-            color: 'var(--text-primary)',
-            fontFamily: 'var(--font-display-family)'
+            fontSize: '42px', 
+            fontWeight: '900', 
+            marginBottom: '16px', 
+            color: 'var(--primary)',
+            fontFamily: 'var(--font-display-family)',
+            lineHeight: 1.1,
+            textTransform: 'uppercase'
           }}>
             {slides[current].title}
           </h2>
           <p style={{ 
-            fontSize: 'var(--font-body-size)', 
+            fontSize: '15px', 
             color: 'var(--text-secondary)', 
-            maxWidth: 300, 
             lineHeight: 1.6, 
-            marginBottom: 'var(--spacing-xl)',
-            marginInline: 'auto'
+            marginBottom: '40px',
+            fontFamily: 'var(--font-family)',
+            borderLeft: '2px solid var(--border)',
+            paddingLeft: '20px',
+            textAlign: 'left'
           }}>
             {slides[current].desc}
           </p>
         </motion.div>
       </AnimatePresence>
 
-      <div style={{ display: 'flex', gap: 8, marginBottom: 40 }}>
+      <div style={{ display: 'flex', gap: 12, marginBottom: 40 }}>
         {slides.map((_, i) => (
           <div 
             key={i} 
             style={{ 
-              width: current === i ? 24 : 8, 
-              height: 8, 
-              borderRadius: 4, 
+              width: current === i ? 40 : 12, 
+              height: 2, 
               background: current === i ? 'var(--primary)' : 'var(--border)', 
-              transition: 'all 300ms ease' 
+              transition: 'all 400ms ease' 
             }} 
           />
         ))}
       </div>
 
-      <div style={{ width: '100%', maxWidth: 320, display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div style={{ width: '100%', maxWidth: 360, display: 'flex', flexDirection: 'column', gap: 16 }}>
         <button 
           className="btn-primary" 
           onClick={handleNext}
-          style={{ width: '100%' }}
+          style={{ 
+            width: '100%', 
+            height: '56px', 
+            fontSize: '14px', 
+            textTransform: 'uppercase', 
+            letterSpacing: '2px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '12px'
+          }}
         >
-          {current === slides.length - 1 ? 'Get Started' : 'Next'}
+          {current === slides.length - 1 ? 'Establish Authority' : 'Next Issue'}
+          <ArrowRight size={18} />
         </button>
         
         <button 
           onClick={() => navigate('/login')} 
           style={{ 
-            fontSize: 'var(--font-label-size)', 
+            fontSize: '12px', 
             color: 'var(--text-muted)', 
             background: 'none', 
             border: 'none', 
             cursor: 'pointer',
-            padding: '8px'
+            padding: '12px',
+            fontFamily: 'var(--font-mono)',
+            textTransform: 'uppercase',
+            letterSpacing: '1px'
           }}
         >
-          Skip
+          Skip Introduction
         </button>
       </div>
 

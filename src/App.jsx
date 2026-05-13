@@ -30,10 +30,13 @@ import ApplicantsPage from './pages/ApplicantsPage';
 import ProfileSetupPage from './pages/setup/ProfileSetupPage';
 import SkillsSetupPage from './pages/setup/SkillsSetupPage';
 import ResumeSetupPage from './pages/setup/ResumeSetupPage';
+import CompanySetupPage from './pages/setup/CompanySetupPage';
+import HiringPreferencesPage from './pages/setup/HiringPreferencesPage';
+import FirstDispatchPage from './pages/setup/FirstDispatchPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ErrorBoundary from './components/ErrorBoundary';
 
-const noNavPaths = ['/', '/onboarding', '/login', '/register', '/forgot-password', '/setup/profile', '/setup/skills', '/setup/resume'];
+const noNavPaths = ['/', '/onboarding', '/login', '/register', '/forgot-password', '/setup/profile', '/setup/skills', '/setup/resume', '/setup/company', '/setup/preferences', '/setup/first-dispatch'];
 
 import { AnimatePresence } from 'framer-motion';
 
@@ -45,6 +48,8 @@ function AppLayout() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', state.theme);
   }, [state.theme]);
+
+  const fullBleedPaths = ['/onboarding', '/login', '/register', '/forgot-password', '/setup/profile', '/setup/skills', '/setup/resume', '/setup/company', '/setup/preferences', '/setup/first-dispatch'];
 
   return (
     <div className="app-container">
@@ -76,7 +81,7 @@ function AppLayout() {
           </ErrorBoundary>
         </DashboardLayout>
       ) : (
-        <main className="main-content">
+        <main className={`main-content ${fullBleedPaths.includes(location.pathname) ? 'full-bleed' : ''}`}>
           <ErrorBoundary>
             <AnimatePresence mode="wait">
               <Routes location={location} key={location.pathname}>
@@ -88,6 +93,9 @@ function AppLayout() {
                 <Route path="/setup/profile" element={<ProtectedRoute><ProfileSetupPage /></ProtectedRoute>} />
                 <Route path="/setup/skills" element={<ProtectedRoute><SkillsSetupPage /></ProtectedRoute>} />
                 <Route path="/setup/resume" element={<ProtectedRoute><ResumeSetupPage /></ProtectedRoute>} />
+                <Route path="/setup/company" element={<ProtectedRoute requiredRole="employer"><CompanySetupPage /></ProtectedRoute>} />
+                <Route path="/setup/preferences" element={<ProtectedRoute requiredRole="employer"><HiringPreferencesPage /></ProtectedRoute>} />
+                <Route path="/setup/first-dispatch" element={<ProtectedRoute requiredRole="employer"><FirstDispatchPage /></ProtectedRoute>} />
                 <Route path="*" element={<Navigate to="/login" replace />} />
               </Routes>
             </AnimatePresence>

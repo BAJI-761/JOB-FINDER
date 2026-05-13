@@ -108,6 +108,101 @@
   align-items: start;
 }
 
+.intelSection {
+  margin-bottom: var(--spacing-xl);
+}
+
+.intelGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.intelCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+.intelCard:hover {
+  background: var(--bg-card-hover);
+  box-shadow: 4px 4px 0px 0px var(--primary);
+  transform: translate(-2px, -2px);
+}
+
+.intelLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.intelValue {
+  font-family: var(--font-display-family);
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.intelTrend {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--trusted-green);
+  font-weight: 600;
+}
+
+.actionBtnText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.actionBtnText:hover {
+  gap: 12px;
+  color: var(--primary);
+}
+
+.emptyFeed {
+  padding: var(--spacing-xl);
+  border: 2px dashed var(--border-light);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.emptyFeed p {
+  font-family: var(--font-family);
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 400px;
+}
+
+@media (max-width: 768px) {
+  .intelGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media (max-width: 1200px) {
   .mainGrid {
     grid-template-columns: 1fr;

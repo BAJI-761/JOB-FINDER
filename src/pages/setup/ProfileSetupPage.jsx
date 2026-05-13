@@ -1,39 +1,136 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, MapPin, FileText } from 'lucide-react';
+import { User, MapPin, ArrowRight, Type, FileText, Camera } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import PageTransition from '../../components/PageTransition';
+import SetupLayout from '../../components/SetupLayout';
+import EditorialInput from '../../components/EditorialInput';
+import { PROFESSIONAL_ASSETS } from '../../data/OnboardingAssets';
+import styles from './Setup.module.css';
 
 export default function ProfileSetupPage() {
   const { state, dispatch } = useApp();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: state.currentUser?.name || '', headline: '', location: '', bio: '' });
+  const fileInputRef = useRef(null);
+  
+  const [form, setForm] = useState({ 
+    name: state.currentUser?.name || '', 
+    headline: '', 
+    location: '', 
+    bio: '',
+    photo: null
+  });
 
-  const handleNext = () => {
-    dispatch({ type: 'UPDATE_PROFILE', payload: { name: form.name, headline: form.headline, location: { label: form.location, address: form.location }, bio: form.bio } });
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setForm(prev => ({ ...prev, photo: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    dispatch({ 
+      type: 'UPDATE_PROFILE', 
+      payload: { 
+        name: form.name, 
+        headline: form.headline, 
+        location: { label: form.location, address: form.location }, 
+        bio: form.bio,
+        avatar: form.photo
+      } 
+    });
     navigate('/setup/skills');
   };
 
   return (
-    <PageTransition>
-      <div style={{ minHeight: '100vh', padding: '24px var(--page-padding)', background: 'var(--bg-page)' }}>
-        <div style={{ height: 6, borderRadius: 3, background: 'var(--border)', marginBottom: 24, overflow: 'hidden' }}>
-          <div style={{ height: '100%', width: '33%', background: 'var(--primary)', borderRadius: 3, transition: 'width 300ms ease' }} />
-        </div>
-        <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Personal Info</h2>
-        <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 24 }}>Step 1 of 3 — Tell us about yourself</p>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 24 }}>
-          <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', fontSize: 28, fontWeight: 700 }}>
-            {form.name?.[0]?.toUpperCase() || '?'}
+    <PageTransition variant="newsprint">
+      <SetupLayout
+        step={1}
+        totalSteps={3}
+        image={PROFESSIONAL_ASSETS.PROFILE}
+        title="Professional Blueprint"
+        subtitle="Establish your identity within the network's high-authority archives."
+        sidebarTitle="Identity Archive"
+        sidebarSubtitle="Your professional narrative begins here. Define how the network perceives your expertise."
+      >
+        <div className={styles.avatarSection} style={{ marginBottom: '40px' }}>
+          <div className={styles.avatarCircle} style={{ overflow: 'hidden', border: '1px solid var(--border)' }}>
+            {form.photo ? (
+              <img src={form.photo} alt="Portrait" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+              <User size={32} />
+            )}
           </div>
-          <button className="btn-secondary" style={{ marginTop: 12, fontSize: 12 }}>Upload Photo</button>
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            onChange={handlePhotoUpload} 
+            style={{ display: 'none' }} 
+            accept="image/*"
+          />
+          <button 
+            type="button"
+            className={styles.actionBtnText} 
+            style={{ marginTop: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Camera size={14} />
+            Replace Portrait
+          </button>
         </div>
-        <div className="form-group"><label className="form-label">Full Name</label><input className="form-input" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="John Doe" /></div>
-        <div className="form-group"><label className="form-label">Headline</label><input className="form-input" value={form.headline} onChange={e => setForm({ ...form, headline: e.target.value })} placeholder="UI/UX Designer" /></div>
-        <div className="form-group"><label className="form-label">Location</label><input className="form-input" value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} placeholder="Bangalore, India" /></div>
-        <div className="form-group"><label className="form-label">Bio</label><textarea className="form-textarea" value={form.bio} onChange={e => setForm({ ...form, bio: e.target.value })} placeholder="Tell us about yourself..." rows={3} /></div>
-        <button className="btn-primary" onClick={handleNext} style={{ marginTop: 8 }}>Next →</button>
-      </div>
+
+        <form onSubmit={handleNext}>
+          <EditorialInput 
+            label="Full Legal Name"
+            icon={User}
+            value={form.name}
+            onChange={e => setForm({ ...form, name: e.target.value })}
+            placeholder="Editorial Professional"
+            required
+          />
+
+          <EditorialInput 
+            label="Professional Headline"
+            icon={Type}
+            value={form.headline}
+            onChange={e => setForm({ ...form, headline: e.target.value })}
+            placeholder="e.g. Strategic Product Architect"
+            required
+          />
+
+          <EditorialInput 
+            label="Primary Jurisdiction (Location)"
+            icon={MapPin}
+            value={form.location}
+            onChange={e => setForm({ ...form, location: e.target.value })}
+            placeholder="e.g. Bangalore, IN"
+            required
+          />
+
+          <EditorialInput 
+            label="Career Narrative (Bio)"
+            icon={FileText}
+            multiline
+            value={form.bio}
+            onChange={e => setForm({ ...form, bio: e.target.value })}
+            placeholder="A brief history of your professional impact..."
+            required
+          />
+
+          <div className={styles.footer} style={{ marginTop: '40px' }}>
+            <div /> {/* Spacer */}
+            <button type="submit" className={styles.dispatchBtn}>
+              Continue to Skills
+              <ArrowRight size={16} />
+            </button>
+          </div>
+        </form>
+      </SetupLayout>
     </PageTransition>
   );
 }

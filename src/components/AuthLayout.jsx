@@ -16,7 +16,7 @@ const AuthLayout = ({ children, image, title, subtitle, sidebarTitle, sidebarSub
     <div className="auth-page-wrapper" style={{
       height: '100vh', // Fixed height to prevent any scroll
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'center', // Reverted to center
       justifyContent: 'center',
       background: 'var(--bg-page)',
       padding: '20px',
@@ -43,7 +43,8 @@ const AuthLayout = ({ children, image, title, subtitle, sidebarTitle, sidebarSub
           border: '1px solid var(--border)',
           display: 'flex',
           flexDirection: 'row',
-          height: '640px', // Increased slightly to give taller forms more room to center
+          height: '580px', 
+          transform: 'translateY(0)', 
           position: 'relative',
           zIndex: 1
         }}
@@ -140,7 +141,7 @@ const AuthLayout = ({ children, image, title, subtitle, sidebarTitle, sidebarSub
         {/* Right Form Panel */}
         <div style={{
           flex: '1',
-          padding: '50px 60px', // Increased from 40px 40px
+          padding: '24px 60px', 
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -154,7 +155,7 @@ const AuthLayout = ({ children, image, title, subtitle, sidebarTitle, sidebarSub
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
             >
-              <div style={{ marginBottom: '20px' }}> {/* Reduced from 32px to help vertical alignment */}
+              <div style={{ marginBottom: '16px' }}>
                 <h1 style={{
                   fontFamily: 'var(--font-serif)',
                   fontSize: '32px', // Restored from 28px

@@ -152,6 +152,13 @@ function appReducer(state, action) {
       return { ...state, companies };
     }
 
+    case 'UPDATE_HIRING_PREFS': {
+      const companies = state.companies.map(c => 
+        c.id === state.currentUser?.companyId ? { ...c, hiringPreferences: action.payload } : c
+      );
+      return { ...state, companies };
+    }
+
     // ── Jobs ──
     case 'ADD_JOB': {
       const newJob = {

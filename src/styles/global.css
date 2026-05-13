@@ -67,6 +67,10 @@ body::before {
   padding-top: 60px; /* Space for TopNav on mobile */
 }
 
+.main-content.full-bleed {
+  padding-top: 0 !important;
+}
+
 @media (min-width: 768px) {
   .main-content {
     padding-top: 88px; /* Adjusted for larger TopNav */

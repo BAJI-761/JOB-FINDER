@@ -1,0 +1,66 @@
+.fieldGroup {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.editorialLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.editorialInput {
+  width: 100%;
+  height: 44px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-family);
+  font-size: 15px;
+  color: var(--text-primary);
+  transition: all var(--transition-base);
+  border-radius: 0;
+}
+
+.editorialInput:focus {
+  outline: none;
+  background: var(--bg-card-hover);
+  border-bottom-color: var(--primary);
+}
+
+.editorialTextarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid var(--border);
+  font-family: var(--font-family);
+  font-size: 15px;
+  color: var(--text-primary);
+  border-radius: 0;
+  resize: vertical;
+  transition: all var(--transition-base);
+}
+
+.editorialTextarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--bg-card-hover);
+}

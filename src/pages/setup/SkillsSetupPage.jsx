@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, Plus } from 'lucide-react';
+import { X, Plus, ArrowRight, ArrowLeft, Target, Briefcase, Building2, Calendar } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import PageTransition from '../../components/PageTransition';
+import SetupLayout from '../../components/SetupLayout';
+import EditorialInput from '../../components/EditorialInput';
+import { PROFESSIONAL_ASSETS } from '../../data/OnboardingAssets';
+import styles from './Setup.module.css';
 
 const suggestedSkills = ['JavaScript', 'React', 'Python', 'Figma', 'Node.js', 'TypeScript', 'SQL', 'HTML/CSS', 'Java', 'Docker', 'AWS', 'Git'];
 
@@ -14,45 +18,103 @@ export default function SkillsSetupPage() {
 
   const toggleSkill = (s) => setSkills(prev => prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]);
 
-  const handleNext = () => {
+  const handleNext = (e) => {
+    e.preventDefault();
     dispatch({ type: 'UPDATE_PROFILE', payload: { skills, experience: exp.filter(e => e.company) } });
     navigate('/setup/resume');
   };
 
   return (
-    <PageTransition>
-      <div style={{ minHeight: '100vh', padding: '24px var(--page-padding)', background: 'var(--bg-page)' }}>
-        <div style={{ height: 6, borderRadius: 3, background: 'var(--border)', marginBottom: 24, overflow: 'hidden' }}>
-          <div style={{ height: '100%', width: '66%', background: 'var(--primary)', borderRadius: 3 }} />
-        </div>
-        <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Skills & Experience</h2>
-        <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 24 }}>Step 2 of 3 — What can you do?</p>
-        <label className="form-label">Select your skills</label>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24 }}>
-          {suggestedSkills.map(s => (
-            <button key={s} onClick={() => toggleSkill(s)} style={{
-              padding: '8px 14px', borderRadius: 9999, fontSize: 12, fontWeight: 500, border: '1.5px solid',
-              background: skills.includes(s) ? 'var(--primary)' : '#fff',
-              color: skills.includes(s) ? '#fff' : 'var(--text-secondary)',
-              borderColor: skills.includes(s) ? 'var(--primary)' : 'var(--border)',
-              cursor: 'pointer', transition: 'all 150ms ease'
-            }}>{s}</button>
-          ))}
-        </div>
-        <label className="form-label">Work Experience</label>
-        {exp.map((e, i) => (
-          <div key={i} className="card" style={{ marginBottom: 12, padding: 16 }}>
-            <input className="form-input" placeholder="Company" value={e.company} onChange={ev => { const n = [...exp]; n[i].company = ev.target.value; setExp(n); }} style={{ marginBottom: 8 }} />
-            <input className="form-input" placeholder="Role" value={e.role} onChange={ev => { const n = [...exp]; n[i].role = ev.target.value; setExp(n); }} style={{ marginBottom: 8 }} />
-            <input className="form-input" placeholder="Duration (e.g. 2 years)" value={e.duration} onChange={ev => { const n = [...exp]; n[i].duration = ev.target.value; setExp(n); }} />
+    <PageTransition variant="newsprint">
+      <SetupLayout
+        step={2}
+        totalSteps={3}
+        image={PROFESSIONAL_ASSETS.SKILLS}
+        title="Talent Archives"
+        subtitle="Index your core competencies and professional history."
+        sidebarTitle="Talent Index"
+        sidebarSubtitle="Categorize your core competencies to optimize your authority within the network."
+      >
+        <section style={{ marginBottom: '32px' }}>
+          <label className={styles.editorialLabel}>Core Competencies</label>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: '16px' }}>
+            {suggestedSkills.map(s => (
+              <button 
+                key={s} 
+                onClick={() => toggleSkill(s)} 
+                style={{
+                  padding: '10px 16px', 
+                  fontSize: '11px', 
+                  fontFamily: 'var(--font-mono)',
+                  textTransform: 'uppercase',
+                  fontWeight: 600, 
+                  border: '1px solid var(--border)',
+                  background: skills.includes(s) ? 'var(--primary)' : 'transparent',
+                  color: skills.includes(s) ? 'var(--bg-page)' : 'var(--text-secondary)',
+                  cursor: 'pointer', 
+                  transition: 'all 200ms ease',
+                  borderRadius: 0
+                }}
+              >
+                {s}
+              </button>
+            ))}
           </div>
-        ))}
-        <button className="btn-secondary" onClick={() => setExp([...exp, { company: '', role: '', duration: '' }])} style={{ marginBottom: 24 }}><Plus size={14} /> Add Experience</button>
-        <div style={{ display: 'flex', gap: 12 }}>
-          <button className="btn-outline" onClick={() => navigate(-1)} style={{ flex: 1 }}>← Back</button>
-          <button className="btn-primary" onClick={handleNext} style={{ flex: 2, height: 48 }}>Next →</button>
+        </section>
+
+        <section>
+          <label className={styles.editorialLabel}>Professional History</label>
+          <div style={{ marginTop: '16px', display: 'grid', gap: '16px' }}>
+            {exp.map((e, i) => (
+              <div key={i} style={{ border: '1px solid var(--border)', padding: '20px', background: 'var(--bg-page-alt)' }}>
+                <EditorialInput 
+                  icon={Building2}
+                  placeholder="Organization Name" 
+                  value={e.company} 
+                  onChange={ev => { const n = [...exp]; n[i].company = ev.target.value; setExp(n); }} 
+                />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <EditorialInput 
+                    icon={Briefcase}
+                    placeholder="Editorial Role" 
+                    value={e.role} 
+                    onChange={ev => { const n = [...exp]; n[i].role = ev.target.value; setExp(n); }} 
+                  />
+                  <EditorialInput 
+                    icon={Calendar}
+                    placeholder="Tenure (e.g. 2 yrs)" 
+                    value={e.duration} 
+                    onChange={ev => { const n = [...exp]; n[i].duration = ev.target.value; setExp(n); }} 
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <button 
+            className={styles.actionBtnText} 
+            onClick={() => setExp([...exp, { company: '', role: '', duration: '' }])} 
+            style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}
+          >
+            <Plus size={14} />
+            Append Experience
+          </button>
+        </section>
+
+        <div className={styles.footer} style={{ marginTop: '40px' }}>
+          <button 
+            className={styles.btnOutline} 
+            onClick={() => navigate(-1)} 
+            style={{ padding: '12px 24px', fontFamily: 'var(--font-mono)', fontSize: '11px', textTransform: 'uppercase', border: '1px solid var(--border)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
+          >
+            <ArrowLeft size={16} />
+            Archive Back
+          </button>
+          <button className={styles.dispatchBtn} onClick={handleNext}>
+            Continue to Dispatch
+            <ArrowRight size={16} />
+          </button>
         </div>
-      </div>
+      </SetupLayout>
     </PageTransition>
   );
 }

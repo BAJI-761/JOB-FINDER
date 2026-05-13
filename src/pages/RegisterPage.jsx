@@ -4,7 +4,7 @@ import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import PageTransition from '../components/PageTransition';
 import AuthLayout from '../components/AuthLayout';
-import registerAuthImg from '../assets/register_auth.png';
+import { AUTH_ASSETS } from '../data/OnboardingAssets';
 
 export default function RegisterPage() {
   const [name, setName] = useState('');
@@ -22,13 +22,15 @@ export default function RegisterPage() {
       title: "Join the Network",
       subtitle: "Establish your professional identity on the leading editorial platform.",
       sidebarTitle: "The Blueprint for Your Career",
-      sidebarSubtitle: "Connect with high-authority professionals and discover exclusive opportunities."
+      sidebarSubtitle: "Connect with high-authority professionals and discover exclusive opportunities.",
+      image: AUTH_ASSETS.REGISTER_CANDIDATE
     },
     employer: {
       title: "Recruit Authority",
       subtitle: "Position your organization at the center of industry excellence.",
       sidebarTitle: "Source the Industry's Elite",
-      sidebarSubtitle: "Establish your firm's authority and find the leaders of tomorrow."
+      sidebarSubtitle: "Establish your firm's authority and find the leaders of tomorrow.",
+      image: AUTH_ASSETS.REGISTER_EMPLOYER
     }
   };
 
@@ -41,21 +43,25 @@ export default function RegisterPage() {
     if (password.length < 6) { setError('Password must be at least 6 characters'); return; }
     if (state.users.find(u => u.email === email)) { setError('Email already registered'); return; }
     dispatch({ type: 'REGISTER', payload: { name, email, password, role } });
-    navigate('/setup/profile', { replace: true });
+    if (role === 'employer') {
+      navigate('/setup/company', { replace: true });
+    } else {
+      navigate('/setup/profile', { replace: true });
+    }
   };
 
   return (
     <PageTransition variant="newsprint">
       <AuthLayout 
-        image={registerAuthImg}
+        image={content.image}
         title={content.title}
         subtitle={content.subtitle}
         sidebarTitle={content.sidebarTitle}
         sidebarSubtitle={content.sidebarSubtitle}
       >
-        <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {/* Role Toggle */}
-          <div style={{ display: 'flex', background: 'var(--bg-page)', padding: '2px', border: '1px solid var(--border)', marginBottom: '2px' }}>
+          <div style={{ display: 'flex', background: 'var(--bg-page)', padding: '2px', border: '1px solid var(--border)', marginBottom: '0px' }}>
             {['candidate', 'employer'].map(r => (
               <button 
                 key={r} 
@@ -153,14 +159,14 @@ export default function RegisterPage() {
 
           {error && <p className="form-error" style={{ margin: 0 }}>{error}</p>}
 
-          <button type="submit" className="btn-primary" style={{ height: '44px', fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '2px' }}>
+          <button type="submit" className="btn-primary" style={{ height: '40px', fontSize: '13px', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '0px' }}>
             Initialize Account
           </button>
 
           <p style={{ 
             textAlign: 'center', 
             fontSize: '13px', 
-            marginTop: '12px', 
+            marginTop: '8px', 
             color: 'var(--text-secondary)',
             fontFamily: 'var(--font-sans)'
           }}>
